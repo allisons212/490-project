@@ -57,8 +57,8 @@
             this.startSysButton.TabIndex = 0;
             this.startSysButton.Text = "Start System";
             this.startSysButton.UseVisualStyleBackColor = true;
-            this.startSysButton.Click += new System.EventHandler(this.startSys_Click);
-            this.startSysButton.MouseCaptureChanged += new System.EventHandler(this.startSys_MouseCaptureChanged);
+            this.startSysButton.Click += new System.EventHandler(this.StartSys_Click);
+            this.startSysButton.MouseCaptureChanged += new System.EventHandler(this.StartSys_MouseCaptureChanged);
             // 
             // pauseSysButton
             // 
@@ -78,7 +78,7 @@
             this.waitingProcessQueue.Size = new System.Drawing.Size(225, 25);
             this.waitingProcessQueue.TabIndex = 4;
             this.waitingProcessQueue.Text = "Waiting Process Queue:";
-            this.waitingProcessQueue.Click += new System.EventHandler(this.label1_Click);
+            this.waitingProcessQueue.Click += new System.EventHandler(this.Label1_Click);
             // 
             // openFileDialog1
             // 
@@ -124,7 +124,7 @@
             this.timeUnit.Size = new System.Drawing.Size(126, 17);
             this.timeUnit.TabIndex = 6;
             this.timeUnit.Text = "One (1) time unit =";
-            this.timeUnit.Click += new System.EventHandler(this.label2_Click);
+            this.timeUnit.Click += new System.EventHandler(this.Label2_Click);
             // 
             // numericUpDown1
             // 
@@ -173,7 +173,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(262, 107);
             this.tableLayoutPanel1.TabIndex = 11;
-            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
+            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.TableLayoutPanel1_Paint);
             // 
             // Form1
             // 

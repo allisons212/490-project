@@ -17,34 +17,42 @@ namespace _490Gui
             InitializeComponent();
         }
 
-        private void startSys_Click(object sender, EventArgs e)
+        private void StartSys_Click(object sender, EventArgs e)
         {
             // will probably want to run open file dialog if this is first time opening event 
+            sysStatLabel.Text = "System Running";
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void PauseSysButton_Click(object sender, EventArgs e)
+        {
+            sysStatLabel.Text = "System Paused";
+        }
+
+        private void Label1_Click(object sender, EventArgs e)
         {
             // unneeded idk why this is here
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             // unneeded idk why this is here
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        private void Label2_Click(object sender, EventArgs e)
         {
             // unneeded idk why this is here
         }
 
-        private void startSys_MouseCaptureChanged(object sender, EventArgs e)
+        private void StartSys_MouseCaptureChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        private void TableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
         }
+
+        
     }
 }

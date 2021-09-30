@@ -14,6 +14,8 @@ namespace _490Gui
         [STAThread]
         static void Main(string[] args)
         {
+            // cout hey what file
+            // cin filepath
             string filePath = "C:/Users/Sierra Laney/Desktop/test.csv";
             var processList = new Queue<Process>();
             processList = Parser.readProcessFile(filePath);
