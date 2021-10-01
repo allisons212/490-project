@@ -17,15 +17,19 @@ namespace _490Gui
             InitializeComponent();
         }
 
+        // events for GUI
+        // GUI works, code works, just need to link the two
+
         private void StartSys_Click(object sender, EventArgs e)
         {
-            // will probably want to run open file dialog if this is first time opening event 
-            sysStatLabel.Text = "System Running";
+            // start code to begin/continue process
+            sysStatLabel.Text = "System Running"; // changes text on system status
         }
 
         private void PauseSysButton_Click(object sender, EventArgs e)
         {
-            sysStatLabel.Text = "System Paused";
+            // pause code if process is running
+            sysStatLabel.Text = "System Paused"; // changes text on system status
         }
 
         private void Label1_Click(object sender, EventArgs e)
@@ -45,14 +49,24 @@ namespace _490Gui
 
         private void StartSys_MouseCaptureChanged(object sender, EventArgs e)
         {
-
+            // unneeded
         }
 
         private void TableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
-
+            // unneeded afaik
         }
 
-        
+        private void NumericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            // event for if time-tracking menu changes
+        }
+
     }
+
+    public class NumericUpDown1EventArgs : EventArgs
+    {
+        // event arg for time setting menu thing
+    }
+
 }

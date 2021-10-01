@@ -33,10 +33,10 @@
             this.startSysButton = new System.Windows.Forms.Button();
             this.pauseSysButton = new System.Windows.Forms.Button();
             this.waitingProcessQueue = new System.Windows.Forms.Label();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.processName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.serviceTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.parserBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.sysProcess = new System.Diagnostics.Process();
             this.timeUnit = new System.Windows.Forms.Label();
@@ -44,9 +44,15 @@
             this.ms = new System.Windows.Forms.Label();
             this.sysStatLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.eventLog1 = new System.Diagnostics.EventLog();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.parserBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
             this.SuspendLayout();
             // 
             // startSysButton
@@ -80,16 +86,14 @@
             this.waitingProcessQueue.Text = "Waiting Process Queue:";
             this.waitingProcessQueue.Click += new System.EventHandler(this.Label1_Click);
             // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
             // dataGridView1
             // 
+            this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.processName,
             this.serviceTime});
+            this.dataGridView1.DataSource = this.parserBindingSource;
             this.dataGridView1.Location = new System.Drawing.Point(37, 161);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
@@ -105,6 +109,10 @@
             // 
             this.serviceTime.HeaderText = "Service Time";
             this.serviceTime.Name = "serviceTime";
+            // 
+            // parserBindingSource
+            // 
+            this.parserBindingSource.DataSource = typeof(Parser);
             // 
             // sysProcess
             // 
@@ -133,6 +141,7 @@
             this.numericUpDown1.Size = new System.Drawing.Size(63, 22);
             this.numericUpDown1.TabIndex = 7;
             this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.NumericUpDown1_ValueChanged);
             // 
             // ms
             // 
@@ -155,10 +164,18 @@
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(39, 368);
+            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Location = new System.Drawing.Point(37, 347);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(702, 60);
+            this.panel1.Size = new System.Drawing.Size(721, 81);
             this.panel1.TabIndex = 10;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(3, 59);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(715, 22);
+            this.textBox1.TabIndex = 0;
             // 
             // tableLayoutPanel1
             // 
@@ -174,6 +191,15 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(262, 107);
             this.tableLayoutPanel1.TabIndex = 11;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.TableLayoutPanel1_Paint);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // eventLog1
+            // 
+            this.eventLog1.Log = "System";
+            this.eventLog1.SynchronizingObject = this;
             // 
             // Form1
             // 
@@ -194,7 +220,11 @@
             this.Name = "Form1";
             this.Text = "490 Process Simulator";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.parserBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -205,7 +235,6 @@
         private System.Windows.Forms.Button startSysButton; // start system
         private System.Windows.Forms.Button pauseSysButton; // pause system
         private System.Windows.Forms.Label waitingProcessQueue;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn processName;
         private System.Windows.Forms.DataGridViewTextBoxColumn serviceTime;
@@ -217,6 +246,10 @@
         private System.Windows.Forms.Label sysStatLabel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.BindingSource parserBindingSource;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Diagnostics.EventLog eventLog1;
     }
 }
 
