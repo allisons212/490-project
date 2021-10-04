@@ -57,9 +57,10 @@
             // 
             // startSysButton
             // 
-            this.startSysButton.Location = new System.Drawing.Point(26, 28);
+            this.startSysButton.Location = new System.Drawing.Point(29, 35);
+            this.startSysButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.startSysButton.Name = "startSysButton";
-            this.startSysButton.Size = new System.Drawing.Size(212, 52);
+            this.startSysButton.Size = new System.Drawing.Size(238, 65);
             this.startSysButton.TabIndex = 0;
             this.startSysButton.Text = "Start System";
             this.startSysButton.UseVisualStyleBackColor = true;
@@ -68,9 +69,10 @@
             // 
             // pauseSysButton
             // 
-            this.pauseSysButton.Location = new System.Drawing.Point(279, 28);
+            this.pauseSysButton.Location = new System.Drawing.Point(314, 35);
+            this.pauseSysButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pauseSysButton.Name = "pauseSysButton";
-            this.pauseSysButton.Size = new System.Drawing.Size(212, 52);
+            this.pauseSysButton.Size = new System.Drawing.Size(238, 65);
             this.pauseSysButton.TabIndex = 1;
             this.pauseSysButton.Text = "Pause System";
             this.pauseSysButton.UseVisualStyleBackColor = true;
@@ -79,7 +81,7 @@
             // 
             this.waitingProcessQueue.AutoSize = true;
             this.waitingProcessQueue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.waitingProcessQueue.Location = new System.Drawing.Point(32, 117);
+            this.waitingProcessQueue.Location = new System.Drawing.Point(36, 146);
             this.waitingProcessQueue.Name = "waitingProcessQueue";
             this.waitingProcessQueue.Size = new System.Drawing.Size(225, 25);
             this.waitingProcessQueue.TabIndex = 4;
@@ -94,21 +96,27 @@
             this.processName,
             this.serviceTime});
             this.dataGridView1.DataSource = this.parserBindingSource;
-            this.dataGridView1.Location = new System.Drawing.Point(37, 161);
+            this.dataGridView1.Location = new System.Drawing.Point(42, 201);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(296, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(333, 188);
             this.dataGridView1.TabIndex = 5;
             // 
             // processName
             // 
             this.processName.HeaderText = "Process Name";
+            this.processName.MinimumWidth = 6;
             this.processName.Name = "processName";
+            this.processName.Width = 125;
             // 
             // serviceTime
             // 
             this.serviceTime.HeaderText = "Service Time";
+            this.serviceTime.MinimumWidth = 6;
             this.serviceTime.Name = "serviceTime";
+            this.serviceTime.Width = 125;
             // 
             // parserBindingSource
             // 
@@ -127,18 +135,19 @@
             // timeUnit
             // 
             this.timeUnit.AutoSize = true;
-            this.timeUnit.Location = new System.Drawing.Point(415, 115);
+            this.timeUnit.Location = new System.Drawing.Point(467, 144);
             this.timeUnit.Name = "timeUnit";
-            this.timeUnit.Size = new System.Drawing.Size(126, 17);
+            this.timeUnit.Size = new System.Drawing.Size(150, 20);
             this.timeUnit.TabIndex = 6;
             this.timeUnit.Text = "One (1) time unit =";
             this.timeUnit.Click += new System.EventHandler(this.Label2_Click);
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(541, 113);
+            this.numericUpDown1.Location = new System.Drawing.Point(615, 141);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(63, 22);
+            this.numericUpDown1.Size = new System.Drawing.Size(71, 26);
             this.numericUpDown1.TabIndex = 7;
             this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericUpDown1.ValueChanged += new System.EventHandler(this.NumericUpDown1_ValueChanged);
@@ -146,9 +155,9 @@
             // ms
             // 
             this.ms.AutoSize = true;
-            this.ms.Location = new System.Drawing.Point(609, 115);
+            this.ms.Location = new System.Drawing.Point(689, 144);
             this.ms.Name = "ms";
-            this.ms.Size = new System.Drawing.Size(26, 17);
+            this.ms.Size = new System.Drawing.Size(32, 20);
             this.ms.TabIndex = 8;
             this.ms.Text = "ms";
             // 
@@ -156,7 +165,7 @@
             // 
             this.sysStatLabel.AutoSize = true;
             this.sysStatLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.sysStatLabel.Location = new System.Drawing.Point(575, 39);
+            this.sysStatLabel.Location = new System.Drawing.Point(647, 49);
             this.sysStatLabel.Name = "sysStatLabel";
             this.sysStatLabel.Size = new System.Drawing.Size(150, 25);
             this.sysStatLabel.TabIndex = 9;
@@ -165,16 +174,18 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Location = new System.Drawing.Point(37, 347);
+            this.panel1.Location = new System.Drawing.Point(42, 434);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(721, 81);
+            this.panel1.Size = new System.Drawing.Size(811, 101);
             this.panel1.TabIndex = 10;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(3, 59);
+            this.textBox1.Location = new System.Drawing.Point(3, 74);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(715, 22);
+            this.textBox1.Size = new System.Drawing.Size(804, 26);
             this.textBox1.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -182,13 +193,14 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 32.62455F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.37545F));
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(433, 188);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(487, 235);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(262, 107);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(295, 134);
             this.tableLayoutPanel1.TabIndex = 11;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.TableLayoutPanel1_Paint);
             // 
@@ -203,9 +215,9 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(900, 562);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.sysStatLabel);
@@ -217,6 +229,7 @@
             this.Controls.Add(this.pauseSysButton);
             this.Controls.Add(this.startSysButton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Form1";
             this.Text = "490 Process Simulator";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
