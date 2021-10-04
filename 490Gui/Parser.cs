@@ -13,7 +13,7 @@ public class Parser
         Queue<Process> processList;
     }
 
-    public static Queue<Process> readProcessFile(string path)
+    public static Queue<Process> ReadProcessFile(string path)
     {
         var processTempList = new Queue<Process>();
         string[] lines = System.IO.File.ReadAllLines(path);

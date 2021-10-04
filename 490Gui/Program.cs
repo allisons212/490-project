@@ -27,11 +27,12 @@ namespace _490Gui
             Console.WriteLine("Please type filepath: \n");
             filePath = Console.ReadLine();
             Console.WriteLine("Path is " + filePath);
+            FreeConsole();
             //string filePath = "C:/Users/Sierra Laney/Desktop/test.csv";
-            var processList = new Queue<Process>();
-            processList = Parser.readProcessFile(filePath);
-            ThreadSim threadSimObj = new ThreadSim();
-            ThreadSim.executeProcess(processList);
+            ProgArgs progArgs = new ProgArgs();
+            progArgs.ProcessList =  Parser.ReadProcessFile(filePath);
+            progArgs.ThreadObj = new ThreadSim();
+            progArgs.ThreadObj.ExecuteProcess(progArgs.ProcessList);
             Console.ReadLine();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

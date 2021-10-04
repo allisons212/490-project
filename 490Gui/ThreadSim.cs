@@ -5,29 +5,45 @@ using System.Collections.Generic;
 public class ThreadSim
 {
 	int tpNumber;
+    int timeUnit;
 	public ThreadSim()
 	{
 
 	}
 
-	public static void executeProcess(Queue<Process> processQueue)
+    public void SetTimeUnit(int time)
+    {
+        this.timeUnit = time;
+    }
+
+    public int GetTimeUnit()
+    {
+        return timeUnit;
+    }
+
+    public void ExecuteProcess(Queue<Process> processQueue)
 	{
 		foreach (Process process in processQueue)
 		{
 			Console.WriteLine(process.processID + " is beginning execution.");
 			process.entryTime = DateTime.Now;
-			for (int i = 0; i < process.serviceTime; i++)
+            int totalTime = process.serviceTime * timeUnit;
+			for (int i = 0; i < totalTime; i++)
 			{
-				Console.WriteLine(process.processID + " is executing.");
+                // multiply service time by times unit
+                
+                Console.WriteLine(process.processID + " is executing.");
 			}
 			process.exitTime = DateTime.Now;
 		}
 
 	}
 
-	public int computeThroughput(int time1, int time2)
+	public int ComputeThroughput(int time1, int time2)
 	{
 
 		return 0;
 	}
+
+    
 }
