@@ -43,15 +43,23 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.ms = new System.Windows.Forms.Label();
             this.sysStatLabel = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.eventLog1 = new System.Diagnostics.EventLog();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.processName2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.arrivalTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.serviceTime2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.finishTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tat = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nTAT = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.currTPutLabel = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.parserBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
             // startSysButton
@@ -62,7 +70,6 @@
             this.startSysButton.TabIndex = 0;
             this.startSysButton.Text = "Start System";
             this.startSysButton.UseVisualStyleBackColor = true;
-            this.startSysButton.Click += new System.EventHandler(this.StartSys_Click);
             // 
             // pauseSysButton
             // 
@@ -91,13 +98,13 @@
             this.processName,
             this.serviceTime});
             this.dataGridView1.DataSource = this.parserBindingSource;
-            this.dataGridView1.Location = new System.Drawing.Point(42, 201);
+            this.dataGridView1.Location = new System.Drawing.Point(36, 158);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(333, 188);
-            this.dataGridView1.TabIndex = 5;
+            this.dataGridView1.Size = new System.Drawing.Size(333, 207);
+
             // 
             // processName
             // 
@@ -105,6 +112,8 @@
             this.processName.MinimumWidth = 6;
             this.processName.Name = "processName";
             this.processName.Width = 125;
+            this.dataGridView1.TabIndex = 5;
+            //this.processName += new System.EventHandler(this.parserBindingSource, )
             // 
             // serviceTime
             // 
@@ -164,33 +173,18 @@
             this.sysStatLabel.TabIndex = 9;
             this.sysStatLabel.Text = "System Paused";
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Location = new System.Drawing.Point(37, 347);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(721, 81);
-            this.panel1.TabIndex = 10;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(3, 59);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(715, 22);
-            this.textBox1.TabIndex = 0;
-            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 32.62455F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.37545F));
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(433, 188);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(433, 163);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(262, 107);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(262, 95);
             this.tableLayoutPanel1.TabIndex = 11;
             // 
             // openFileDialog1
@@ -202,13 +196,84 @@
             this.eventLog1.Log = "System";
             this.eventLog1.SynchronizingObject = this;
             // 
+            // dataGridView2
+            // 
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.processName2,
+            this.arrivalTime,
+            this.serviceTime2,
+            this.finishTime,
+            this.tat,
+            this.nTAT});
+            this.dataGridView2.Location = new System.Drawing.Point(37, 404);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.RowTemplate.Height = 24;
+            this.dataGridView2.Size = new System.Drawing.Size(696, 158);
+            this.dataGridView2.TabIndex = 12;
+            // 
+            // processName2
+            // 
+            this.processName2.HeaderText = "Process Name";
+            this.processName2.Name = "processName2";
+            // 
+            // arrivalTime
+            // 
+            this.arrivalTime.HeaderText = "Arrival Time";
+            this.arrivalTime.Name = "arrivalTime";
+            // 
+            // serviceTime2
+            // 
+            this.serviceTime2.HeaderText = "Service Time";
+            this.serviceTime2.Name = "serviceTime2";
+            // 
+            // finishTime
+            // 
+            this.finishTime.HeaderText = "Finish Time";
+            this.finishTime.Name = "finishTime";
+            // 
+            // tat
+            // 
+            this.tat.HeaderText = "TAT";
+            this.tat.Name = "tat";
+            // 
+            // nTAT
+            // 
+            this.nTAT.HeaderText = "nTAT";
+            this.nTAT.Name = "nTAT";
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.41763F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.58237F));
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(433, 275);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 51.47059F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 48.52941F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(262, 89);
+            this.tableLayoutPanel2.TabIndex = 13;
+            // 
+            // currTPutLabel
+            // 
+            this.currTPutLabel.AutoSize = true;
+            this.currTPutLabel.Location = new System.Drawing.Point(34, 569);
+            this.currTPutLabel.Name = "currTPutLabel";
+            this.currTPutLabel.Size = new System.Drawing.Size(274, 17);
+            this.currTPutLabel.TabIndex = 14;
+            this.currTPutLabel.Text = "Current Throughput: x process/unit of time";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 595);
+            this.Controls.Add(this.currTPutLabel);
+            this.Controls.Add(this.tableLayoutPanel2);
+            this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.sysStatLabel);
             this.Controls.Add(this.ms);
             this.Controls.Add(this.numericUpDown1);
@@ -220,11 +285,11 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "490 Process Simulator";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.parserBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -245,11 +310,18 @@
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label sysStatLabel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.BindingSource parserBindingSource;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Diagnostics.EventLog eventLog1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn processName2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn arrivalTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn serviceTime2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn finishTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tat;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nTAT;
+        private System.Windows.Forms.Label currTPutLabel;
     }
 }
 

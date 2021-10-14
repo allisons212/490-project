@@ -28,10 +28,10 @@ public class ThreadSim
 			Console.WriteLine(process.processID + " is beginning execution.");
 			process.entryTime = DateTime.Now;
             int totalTime = process.serviceTime * timeUnit;
+
 			for (int i = 0; i < totalTime; i++)
 			{
                 // multiply service time by times unit
-                
                 Console.WriteLine(process.processID + " is executing.");
 			}
 			process.exitTime = DateTime.Now;
@@ -41,8 +41,9 @@ public class ThreadSim
 
 	public int ComputeThroughput(int time1, int time2)
 	{
-
-		return 0;
+        // throughput would be time taken
+        // assuming time2 is finish time and time1 is beginning time
+		return time2 - time1;
 	}
 
     

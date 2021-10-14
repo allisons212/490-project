@@ -25,13 +25,13 @@ namespace _490Gui
             // start code to begin/continue process
             e.ThreadObj.ExecuteProcess(e.ProcessList);
 
-            sysStatLabel.Text = "System Running"; // changes text on system status
+            this.sysStatLabel.Text = "System Running"; // changes text on system status
         }
 
         private void PauseSysButton_Click(object sender, EventArgs e)
         {
             // pause code if process is running
-            sysStatLabel.Text = "System Paused"; // changes text on system status
+            this.sysStatLabel.Text = "System Paused"; // changes text on system status
         }
 
 
@@ -41,6 +41,12 @@ namespace _490Gui
             // call threamSim setTimeUnit
         }
 
+        private void Label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 
     public class NumericUpDown1EventArgs : EventArgs
@@ -48,5 +54,5 @@ namespace _490Gui
         // event arg for time setting menu thing
     }
 
-
+    
 }
