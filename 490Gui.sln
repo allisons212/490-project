@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Parser.cs = Parser.cs
 		Process.cs = Process.cs
-		ThreadSim.cs = ThreadSim.cs
+		490Gui\ThreadSim.cs = 490Gui\ThreadSim.cs
 	EndProjectSection
 EndProject
 Global
