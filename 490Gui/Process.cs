@@ -8,7 +8,7 @@ public class Process
 	public string processID;
 	public int priority;
 	public DateTime entryTime;
-	public DateTime exitTime;
+	public DateTime finishTime;
 	public Process()
 	{
 		arrivalTime = 0;

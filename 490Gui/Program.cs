@@ -8,18 +8,14 @@ namespace _490Gui
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
 
         static Queue<Process> processList = new Queue<Process>();
         static void Main(string[] args)
         {
-            // TODO ADD LOOP TO ITERATE THROUGH ALL PROCESSES 
             string filePath = "C:/Users/Sierra Laney/Desktop/test.csv";
             processList = Parser.readProcessFile(filePath);
-            Thread thread1 = new Thread(new ThreadStart(dummyProcess));
-            Thread thread2 = new Thread(new ThreadStart(dummyProcess));
+            Thread thread1 = new Thread(new ThreadStart(selectProcess));
+            Thread thread2 = new Thread(new ThreadStart(selectProcess));
             thread1.Start();
             thread2.Start();
             Console.ReadLine();
@@ -28,11 +24,17 @@ namespace _490Gui
             Application.Run(new Form1());
         }
 
-        public static void dummyProcess()
+        // Summary: Thread will select a new process from the queue
+        // and then send the process to be executed.
+        // Params: None
+        // Return: None
+        public static void selectProcess()
         {
-            var process = processList.Dequeue(); 
-            ThreadSim.executeProcess(process, 1000);
-
+            while (processList.Count != 0)
+            {
+                var process = processList.Dequeue();
+                ThreadSim.executeProcess(process, 1000);
+            }
         }
 
     }
