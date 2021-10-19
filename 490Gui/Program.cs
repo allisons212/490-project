@@ -12,9 +12,10 @@ namespace _490Gui
         static Queue<Process> processList = new Queue<Process>();
         static void Main(string[] args)
         {
+            DateTime programStartTime = DateTime.Now;
             string filePath = "C:/Users/Sierra Laney/Desktop/test.csv";
             processList = Parser.readProcessFile(filePath);
-            DateTime programStartTime = DateTime.Now; 
+            
             Thread thread1 = new Thread(new ThreadStart(selectProcess));
             Thread thread2 = new Thread(new ThreadStart(selectProcess));
             thread1.Start();
