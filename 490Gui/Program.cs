@@ -11,12 +11,17 @@ namespace _490Gui
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        [STAThread]
 
+        static Queue<Process> processList = new Queue<Process>();
         static void Main(string[] args)
         {
-            Thread t = new Thread(new ThreadStart(dummyProcess));
-            t.Start();
+            // TODO ADD LOOP TO ITERATE THROUGH ALL PROCESSES 
+            string filePath = "C:/Users/Sierra Laney/Desktop/test.csv";
+            processList = Parser.readProcessFile(filePath);
+            Thread thread1 = new Thread(new ThreadStart(dummyProcess));
+            Thread thread2 = new Thread(new ThreadStart(dummyProcess));
+            thread1.Start();
+            thread2.Start();
             Console.ReadLine();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -25,10 +30,8 @@ namespace _490Gui
 
         public static void dummyProcess()
         {
-            string filePath = "C:/Users/Sierra Laney/Desktop/test.csv";
-            var processList = new Queue<Process>();
-            processList = Parser.readProcessFile(filePath);
-            ThreadSim.executeProcess(processList, 1000);
+            var process = processList.Dequeue(); 
+            ThreadSim.executeProcess(process, 1000);
 
         }
 

@@ -2,6 +2,7 @@
 
 public class Process
 {
+	// ADD MEMBER VARIABLES FOR PHASE II 
 	public int arrivalTime;
 	public int serviceTime;
 	public string processID;

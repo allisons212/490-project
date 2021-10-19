@@ -15,13 +15,10 @@ namespace _490Gui
 			//Process[] reportArray = new Process[] { };
 		}
 
-		public static void executeProcess(Queue<Process> processQueue, int miliseconds)
+		public static void executeProcess(Process process, int miliseconds)
 		{
-			//Process[] reportArray = new Process[] { };
-			ArrayList reportArray = new ArrayList();
-			//int counter = 0;
-			foreach (Process process in processQueue)
-			{
+			// ArrayList reportArray = new ArrayList();
+			// var runningProcess = processQueue.Dequeue();
 				Console.WriteLine(process.processID + " is beginning execution.");
 				process.entryTime = DateTime.Now;
 				for (int i = 0; i < process.serviceTime; i++)
@@ -30,12 +27,9 @@ namespace _490Gui
 					Thread.Sleep(miliseconds);
 				}
 				process.exitTime = DateTime.Now;
-				//reportArray[counter] = process;
-				reportArray.Add(process);
-				//counter++;
-			}
-
+				// reportArray.Add(runningProcess);
 		}
+		
 
 		public int computeThroughput(DateTime time1, DateTime time2, Process[] reportArray)
 		{
