@@ -38,7 +38,6 @@ namespace _490Gui
 		{
 			TimeSpan timeDifference = DateTime.Now - programStartTime;
 			float secondsSinceStart = timeDifference.Ticks / 10000000;
-			//Console.WriteLine("program start time:" + programStartTime + " current throughput:" + counter / (programStartTime - DateTime.Now);
 			float currentTP = counter / secondsSinceStart;
 			Console.WriteLine(currentTP);
 			return (counter / programStartTime.Ticks);
