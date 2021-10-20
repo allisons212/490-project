@@ -1,60 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace _490Gui
 {
     static class Program
     {
-        /**
-        [DllImport("kernel32.dll")]
-        public static extern bool AllocConsole();
 
-        [DllImport("kernel32.dll")]
-        public static extern bool FreeConsole();
-    **/
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
+        static Queue<Process> processList = new Queue<Process>();
         static void Main(string[] args)
         {
-            //AllocConsole();
-            // cout hey what file
-            // cin filepath
-            //string filePath;
-            //Console.WriteLine("Please type filepath: \n");
-            //filePath = Console.ReadLine();
-            //Console.WriteLine("Path is " + filePath);
-            //FreeConsole();
+            DateTime programStartTime = DateTime.Now;
             string filePath = "C:/Users/cowca/Documents/490csv.csv";
-            ProgArgs progArgs = new ProgArgs();
-            progArgs.ProcessList =  Parser.ReadProcessFile(filePath);
-            progArgs.ThreadObj = new ThreadSim();
-            progArgs.ThreadObj.ExecuteProcess(progArgs.ProcessList);
+            processList = Parser.readProcessFile(filePath);
+
+            Thread thread1 = new Thread(new ThreadStart(selectProcess));
+            Thread thread2 = new Thread(new ThreadStart(selectProcess));
+            thread1.Start();
+            thread2.Start();
             Console.ReadLine();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Form1 f = new Form1();
-            // f += HandleButtonClick();
-            Application.Run(f);
+            Application.Run(new Form1());
         }
 
-        /**
-        private void HandleButtonClick(object sender, EventArgs e)
+        // Summary: Thread will select a new process from the queue
+        // and then send the process to be executed.
+        // Params: None
+        // Return: None
+        public static void selectProcess()
         {
-            Button btn = (Button)sender;
-            if (btn.Tag == "Start System")
-                this.sysStatLabel.Text = "System Running";
-            else if (btn.Tag == "Pause System")
-                this.sysStatLabel.Text = "System Paused";
-            // etc.
-        } **/
+            while (processList.Count != 0)
+            {
+                var process = processList.Dequeue();
+                ThreadSim.executeProcess(process, 1000);
+            }
+        }
+
     }
 
-    
 }
-

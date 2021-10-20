@@ -70,6 +70,7 @@
             this.startSysButton.TabIndex = 0;
             this.startSysButton.Text = "Start System";
             this.startSysButton.UseVisualStyleBackColor = true;
+            this.startSysButton.Click += new System.EventHandler(StartSys_Click);
             // 
             // pauseSysButton
             // 
@@ -79,6 +80,7 @@
             this.pauseSysButton.TabIndex = 1;
             this.pauseSysButton.Text = "Pause System";
             this.pauseSysButton.UseVisualStyleBackColor = true;
+            this.pauseSysButton.Click += new System.EventHandler(PauseSysButton_Click);
             // 
             // waitingProcessQueue
             // 
@@ -104,7 +106,7 @@
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(333, 207);
-
+            this.dataGridView1.TabIndex = 5;
             // 
             // processName
             // 
@@ -112,8 +114,6 @@
             this.processName.MinimumWidth = 6;
             this.processName.Name = "processName";
             this.processName.Width = 125;
-            this.dataGridView1.TabIndex = 5;
-            //this.processName += new System.EventHandler(this.parserBindingSource, )
             // 
             // serviceTime
             // 

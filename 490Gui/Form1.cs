@@ -20,27 +20,49 @@ namespace _490Gui
         // events for GUI
         // GUI works, code works, just need to link the two
 
-        private void StartSys_Click(object sender, ProgArgs e) //fix progArgs
+        public delegate void StartSys_ClickEventHandler(object source, EventArgs args);
+        public event StartSys_ClickEventHandler StartSysClicked;
+        private void StartSys_Click(object sender, EventArgs e) //fix progArgs
         {
             // start code to begin/continue process
-            e.ThreadObj.ExecuteProcess(e.ProcessList);
+            // e.ThreadObj.ExecuteProcess(e.ProcessList);
 
             this.sysStatLabel.Text = "System Running"; // changes text on system status
         }
+        protected virtual void OnStartSysClick()
+        {
+            if (StartSysClicked != null)
+            {
+                StartSysClicked(this, EventArgs.Empty);
+            }
+        }
 
+        public delegate void PauseSysButton_ClickEventHandler(object source, EventArgs args);
+        public event PauseSysButton_ClickEventHandler PauseSysClicked;
         private void PauseSysButton_Click(object sender, EventArgs e)
         {
             // pause code if process is running
             this.sysStatLabel.Text = "System Paused"; // changes text on system status
         }
+        protected virtual void OnPauseSysClick()
+        {
+            if (PauseSysClicked != null)
+            {
+                PauseSysButton_Click(this, EventArgs.Empty);
+            }
+        }
 
-
+        public delegate void NumericUpDown1_ValueChangedEventHandler(object source, EventArgs args);
+        public event NumericUpDown1_ValueChangedEventHandler numUpDown1ValChanged;
         private void NumericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             // event for if time-tracking menu changes
             // call threamSim setTimeUnit
         }
 
+        /**
+         * this method is not needed, but if I delete it the code crashes
+        **/
         private void Label1_Click(object sender, EventArgs e)
         {
 

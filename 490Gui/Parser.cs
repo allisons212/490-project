@@ -13,7 +13,11 @@ public class Parser
         Queue<Process> processList;
     }
 
-    public static Queue<Process> ReadProcessFile(string path)
+    // Summary: Reads data from a csv file, sets it to a process object, and adds to a queue
+    // of processes
+    // Params: String
+    // Return: Process Queue
+    public static Queue<Process> readProcessFile(string path)
     {
         var processTempList = new Queue<Process>();
         string[] lines = System.IO.File.ReadAllLines(path);
