@@ -13,9 +13,11 @@ namespace _490Gui
         static void Main(string[] args)
         {
             DateTime programStartTime = DateTime.Now;
+            // Sierra's path: C:/Users/Sierra Laney/Desktop/test.csv
+            Console.WriteLine("Enter the path for csv file: ");
             string filePath = "C:/Users/Sierra Laney/Desktop/test.csv";
             processList = Parser.readProcessFile(filePath);
-            
+
             Thread thread1 = new Thread(new ThreadStart(selectProcess));
             Thread thread2 = new Thread(new ThreadStart(selectProcess));
             thread1.Start();
