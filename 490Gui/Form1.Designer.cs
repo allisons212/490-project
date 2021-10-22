@@ -34,43 +34,47 @@
             this.pauseSysButton = new System.Windows.Forms.Button();
             this.waitingProcessQueue = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.processName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.serviceTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.parserBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.sysProcess = new System.Diagnostics.Process();
             this.timeUnit = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.ms = new System.Windows.Forms.Label();
             this.sysStatLabel = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.eventLog1 = new System.Diagnostics.EventLog();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.processName2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.arrivalTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.serviceTime2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.finishTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tat = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nTAT = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.currTPutLabel = new System.Windows.Forms.Label();
+            this.cpu1header = new System.Windows.Forms.Label();
+            this.cpu1execheader = new System.Windows.Forms.Label();
+            this.cpu1TR = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.cpu1TRShow = new System.Windows.Forms.Label();
+            this.cpu1ProcessExec = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.cpu2TRShow = new System.Windows.Forms.Label();
+            this.cpu2ProcessExec = new System.Windows.Forms.Label();
+            this.cpu2TR = new System.Windows.Forms.Label();
+            this.cpu2execheader = new System.Windows.Forms.Label();
+            this.cpu2header = new System.Windows.Forms.Label();
+            this.parserBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.parserBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.parserBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // startSysButton
             // 
-            this.startSysButton.Location = new System.Drawing.Point(26, 28);
+            this.startSysButton.Location = new System.Drawing.Point(37, 28);
             this.startSysButton.Name = "startSysButton";
             this.startSysButton.Size = new System.Drawing.Size(212, 52);
             this.startSysButton.TabIndex = 0;
             this.startSysButton.Text = "Start System";
             this.startSysButton.UseVisualStyleBackColor = true;
-            this.startSysButton.Click += new System.EventHandler(StartSys_Click);
+            this.startSysButton.Click += new System.EventHandler(this.StartSys_Click);
             // 
             // pauseSysButton
             // 
@@ -80,7 +84,7 @@
             this.pauseSysButton.TabIndex = 1;
             this.pauseSysButton.Text = "Pause System";
             this.pauseSysButton.UseVisualStyleBackColor = true;
-            this.pauseSysButton.Click += new System.EventHandler(PauseSysButton_Click);
+            this.pauseSysButton.Click += new System.EventHandler(this.PauseSysButton_Click);
             // 
             // waitingProcessQueue
             // 
@@ -94,37 +98,15 @@
             // 
             // dataGridView1
             // 
-            this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.processName,
-            this.serviceTime});
-            this.dataGridView1.DataSource = this.parserBindingSource;
             this.dataGridView1.Location = new System.Drawing.Point(36, 158);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.ShowEditingIcon = false;
             this.dataGridView1.Size = new System.Drawing.Size(333, 207);
             this.dataGridView1.TabIndex = 5;
-            // 
-            // processName
-            // 
-            this.processName.HeaderText = "Process Name";
-            this.processName.MinimumWidth = 6;
-            this.processName.Name = "processName";
-            this.processName.Width = 125;
-            // 
-            // serviceTime
-            // 
-            this.serviceTime.HeaderText = "Service Time";
-            this.serviceTime.MinimumWidth = 6;
-            this.serviceTime.Name = "serviceTime";
-            this.serviceTime.Width = 125;
-            // 
-            // parserBindingSource
-            // 
-            this.parserBindingSource.DataSource = typeof(Parser);
             // 
             // sysProcess
             // 
@@ -169,23 +151,10 @@
             this.sysStatLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.sysStatLabel.Location = new System.Drawing.Point(575, 39);
             this.sysStatLabel.Name = "sysStatLabel";
-            this.sysStatLabel.Size = new System.Drawing.Size(150, 25);
+            this.sysStatLabel.Size = new System.Drawing.Size(155, 25);
             this.sysStatLabel.TabIndex = 9;
-            this.sysStatLabel.Text = "System Paused";
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 32.62455F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.37545F));
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(433, 163);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(262, 95);
-            this.tableLayoutPanel1.TabIndex = 11;
+            this.sysStatLabel.Text = "System Running";
+            this.sysStatLabel.Click += new System.EventHandler(this.sysStatLabel_Click);
             // 
             // openFileDialog1
             // 
@@ -199,62 +168,12 @@
             // dataGridView2
             // 
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.processName2,
-            this.arrivalTime,
-            this.serviceTime2,
-            this.finishTime,
-            this.tat,
-            this.nTAT});
             this.dataGridView2.Location = new System.Drawing.Point(37, 404);
             this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.RowHeadersWidth = 51;
             this.dataGridView2.RowTemplate.Height = 24;
             this.dataGridView2.Size = new System.Drawing.Size(696, 158);
             this.dataGridView2.TabIndex = 12;
-            // 
-            // processName2
-            // 
-            this.processName2.HeaderText = "Process Name";
-            this.processName2.Name = "processName2";
-            // 
-            // arrivalTime
-            // 
-            this.arrivalTime.HeaderText = "Arrival Time";
-            this.arrivalTime.Name = "arrivalTime";
-            // 
-            // serviceTime2
-            // 
-            this.serviceTime2.HeaderText = "Service Time";
-            this.serviceTime2.Name = "serviceTime2";
-            // 
-            // finishTime
-            // 
-            this.finishTime.HeaderText = "Finish Time";
-            this.finishTime.Name = "finishTime";
-            // 
-            // tat
-            // 
-            this.tat.HeaderText = "TAT";
-            this.tat.Name = "tat";
-            // 
-            // nTAT
-            // 
-            this.nTAT.HeaderText = "nTAT";
-            this.nTAT.Name = "nTAT";
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.41763F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.58237F));
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(433, 275);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 3;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 51.47059F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 48.52941F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(262, 89);
-            this.tableLayoutPanel2.TabIndex = 13;
             // 
             // currTPutLabel
             // 
@@ -265,15 +184,133 @@
             this.currTPutLabel.TabIndex = 14;
             this.currTPutLabel.Text = "Current Throughput: x process/unit of time";
             // 
+            // cpu1header
+            // 
+            this.cpu1header.AutoSize = true;
+            this.cpu1header.Location = new System.Drawing.Point(107, 0);
+            this.cpu1header.Name = "cpu1header";
+            this.cpu1header.Size = new System.Drawing.Size(52, 17);
+            this.cpu1header.TabIndex = 15;
+            this.cpu1header.Text = "CPU 1:";
+            // 
+            // cpu1execheader
+            // 
+            this.cpu1execheader.AutoSize = true;
+            this.cpu1execheader.Location = new System.Drawing.Point(3, 32);
+            this.cpu1execheader.Name = "cpu1execheader";
+            this.cpu1execheader.Size = new System.Drawing.Size(73, 17);
+            this.cpu1execheader.TabIndex = 16;
+            this.cpu1execheader.Text = "Executing:";
+            // 
+            // cpu1TR
+            // 
+            this.cpu1TR.AutoSize = true;
+            this.cpu1TR.Location = new System.Drawing.Point(3, 60);
+            this.cpu1TR.Name = "cpu1TR";
+            this.cpu1TR.Size = new System.Drawing.Size(114, 17);
+            this.cpu1TR.TabIndex = 17;
+            this.cpu1TR.Text = "Time Remaining:";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.cpu1TRShow);
+            this.panel1.Controls.Add(this.cpu1ProcessExec);
+            this.panel1.Controls.Add(this.cpu1TR);
+            this.panel1.Controls.Add(this.cpu1header);
+            this.panel1.Controls.Add(this.cpu1execheader);
+            this.panel1.Location = new System.Drawing.Point(437, 170);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(257, 90);
+            this.panel1.TabIndex = 18;
+            // 
+            // cpu1TRShow
+            // 
+            this.cpu1TRShow.AutoSize = true;
+            this.cpu1TRShow.Location = new System.Drawing.Point(157, 60);
+            this.cpu1TRShow.Name = "cpu1TRShow";
+            this.cpu1TRShow.Size = new System.Drawing.Size(16, 17);
+            this.cpu1TRShow.TabIndex = 20;
+            this.cpu1TRShow.Text = "0";
+            // 
+            // cpu1ProcessExec
+            // 
+            this.cpu1ProcessExec.AutoSize = true;
+            this.cpu1ProcessExec.Location = new System.Drawing.Point(155, 32);
+            this.cpu1ProcessExec.Name = "cpu1ProcessExec";
+            this.cpu1ProcessExec.Size = new System.Drawing.Size(42, 17);
+            this.cpu1ProcessExec.TabIndex = 18;
+            this.cpu1ProcessExec.Text = "None";
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.cpu2TRShow);
+            this.panel2.Controls.Add(this.cpu2ProcessExec);
+            this.panel2.Controls.Add(this.cpu2TR);
+            this.panel2.Controls.Add(this.cpu2execheader);
+            this.panel2.Controls.Add(this.cpu2header);
+            this.panel2.Location = new System.Drawing.Point(437, 286);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(256, 78);
+            this.panel2.TabIndex = 19;
+            // 
+            // cpu2TRShow
+            // 
+            this.cpu2TRShow.AutoSize = true;
+            this.cpu2TRShow.Location = new System.Drawing.Point(157, 53);
+            this.cpu2TRShow.Name = "cpu2TRShow";
+            this.cpu2TRShow.Size = new System.Drawing.Size(16, 17);
+            this.cpu2TRShow.TabIndex = 21;
+            this.cpu2TRShow.Text = "0";
+            // 
+            // cpu2ProcessExec
+            // 
+            this.cpu2ProcessExec.AutoSize = true;
+            this.cpu2ProcessExec.Location = new System.Drawing.Point(155, 30);
+            this.cpu2ProcessExec.Name = "cpu2ProcessExec";
+            this.cpu2ProcessExec.Size = new System.Drawing.Size(42, 17);
+            this.cpu2ProcessExec.TabIndex = 20;
+            this.cpu2ProcessExec.Text = "None";
+            // 
+            // cpu2TR
+            // 
+            this.cpu2TR.AutoSize = true;
+            this.cpu2TR.Location = new System.Drawing.Point(3, 53);
+            this.cpu2TR.Name = "cpu2TR";
+            this.cpu2TR.Size = new System.Drawing.Size(114, 17);
+            this.cpu2TR.TabIndex = 20;
+            this.cpu2TR.Text = "Time Remaining:";
+            // 
+            // cpu2execheader
+            // 
+            this.cpu2execheader.AutoSize = true;
+            this.cpu2execheader.Location = new System.Drawing.Point(3, 30);
+            this.cpu2execheader.Name = "cpu2execheader";
+            this.cpu2execheader.Size = new System.Drawing.Size(73, 17);
+            this.cpu2execheader.TabIndex = 20;
+            this.cpu2execheader.Text = "Executing:";
+            // 
+            // cpu2header
+            // 
+            this.cpu2header.AutoSize = true;
+            this.cpu2header.Location = new System.Drawing.Point(107, 0);
+            this.cpu2header.Name = "cpu2header";
+            this.cpu2header.Size = new System.Drawing.Size(52, 17);
+            this.cpu2header.TabIndex = 20;
+            this.cpu2header.Text = "CPU 2:";
+            // 
+            // parserBindingSource
+            // 
+            this.parserBindingSource.DataSource = typeof(Parser);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 595);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.currTPutLabel);
-            this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.dataGridView2);
-            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.sysStatLabel);
             this.Controls.Add(this.ms);
             this.Controls.Add(this.numericUpDown1);
@@ -286,10 +323,14 @@
             this.Name = "Form1";
             this.Text = "490 Process Simulator";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.parserBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.parserBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -299,29 +340,31 @@
 
         private System.Windows.Forms.Button startSysButton; // start system
         private System.Windows.Forms.Button pauseSysButton; // pause system
-        private System.Windows.Forms.Label waitingProcessQueue;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn processName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn serviceTime;
+        private System.Windows.Forms.Label waitingProcessQueue; // "Waiting Process Queue:" Header
+        private System.Windows.Forms.DataGridView dataGridView1; // table that shows waiting process
         private System.Windows.Forms.Timer timer1;
         private System.Diagnostics.Process sysProcess;
-        private System.Windows.Forms.Label timeUnit;
-        private System.Windows.Forms.Label ms;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.Label sysStatLabel;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label timeUnit; // "One (1) time unit = "
+        private System.Windows.Forms.Label ms; // "ms"
+        private System.Windows.Forms.NumericUpDown numericUpDown1; // table to set time unit value
+        private System.Windows.Forms.Label sysStatLabel; // status label for if system is running or not
         private System.Windows.Forms.BindingSource parserBindingSource;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1; // opens on program load to ask user to select file
         private System.Diagnostics.EventLog eventLog1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn processName2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn arrivalTime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn serviceTime2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn finishTime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tat;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nTAT;
-        private System.Windows.Forms.Label currTPutLabel;
+        private System.Windows.Forms.DataGridView dataGridView2; // data grid that holds log of processes
+        private System.Windows.Forms.Label currTPutLabel; // current throughput line at bottom
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label cpu2TR; // "Time remaining" in CPU 2 panel
+        private System.Windows.Forms.Label cpu2execheader; // "Executing" in cpu 2 panel
+        private System.Windows.Forms.Label cpu2header; // "CPU 2"
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label cpu1TR; // "Time remaining" in CPU 1 panel
+        private System.Windows.Forms.Label cpu1header; // "CPU 1"
+        private System.Windows.Forms.Label cpu1execheader; // "Executing" in cpu 1 panel
+        private System.Windows.Forms.Label cpu2TRShow; // shows time remaining in CPU 2
+        private System.Windows.Forms.Label cpu2ProcessExec; // shows name of process executing in CPU 2 panel
+        private System.Windows.Forms.Label cpu1TRShow; // shows time remaining in CPU 1 
+        private System.Windows.Forms.Label cpu1ProcessExec; // shows process executing in CPU 1 panel
     }
 }
 

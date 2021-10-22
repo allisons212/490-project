@@ -17,11 +17,15 @@ namespace _490Gui
         public static void executeProcess(Process process, int miliseconds)
         {
             Console.WriteLine(process.processID + " is beginning execution.");
+            
             process.entryTime = DateTime.Now;
             for (int i = 0; i < process.serviceTime; i++)
             {
-                Console.WriteLine(process.processID + " is executing.");
-                Thread.Sleep(miliseconds);
+                 
+                 Console.WriteLine(process.processID + " is executing.");
+                 Thread.Sleep(miliseconds);
+                 i++;
+                
             }
             process.finishTime = DateTime.Now;
             counter++;
@@ -29,6 +33,7 @@ namespace _490Gui
             long trial = computeCurrentThroughput(process.entryTime);
             TimeSpan tat = computeTAT(process.entryTime, process.finishTime);
             TimeSpan ntat = computeNTAT(tat, process.serviceTime);
+
         }
 
         // Summary: Calculates the number of processes completed since program start
