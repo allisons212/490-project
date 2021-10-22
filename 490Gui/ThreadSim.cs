@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-// using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -16,15 +15,17 @@ namespace _490Gui
 		// Return: None
 		public static void executeProcess(Process process, int miliseconds)
 		{
-				Console.WriteLine(process.ProcessID + " is beginning execution.");
-				process.EntryTime = DateTime.Now;
-				for (int i = 0; i < process.ServiceTime; i++)
-				{
-					Console.WriteLine(process.ProcessID + " is executing.");
-					Thread.Sleep(miliseconds);
-				}
-				process.FinishTime = DateTime.Now;
-				counter++;
+			process.EntryTime = DateTime.Now;
+			process.ProcessThread = Thread.CurrentThread.ManagedThreadId;
+			Console.WriteLine(process.ProcessID + " is on thread " + process.ProcessThread);
+
+			for (int i = 0; i < process.ServiceTime; i++)
+			{
+				// Console.WriteLine(process.ProcessID + " is executing.");
+				Thread.Sleep(miliseconds);
+			}
+			process.FinishTime = DateTime.Now;
+			counter++;
 
 			long trial = computeCurrentThroughput(process.EntryTime);
 		}
@@ -37,7 +38,7 @@ namespace _490Gui
 			TimeSpan timeDifference = DateTime.Now - programStartTime;
 			float secondsSinceStart = timeDifference.Ticks / 10000000;
 			float currentTP = counter / secondsSinceStart;
-			Console.WriteLine(currentTP);
+			// Console.WriteLine(currentTP);
 			return (counter / programStartTime.Ticks);
 		}
 
@@ -54,7 +55,7 @@ namespace _490Gui
                     counter++;
                 }
             }
-			Console.WriteLine(counter);
+			// Console.WriteLine(counter);
             return counter;
 		}
 

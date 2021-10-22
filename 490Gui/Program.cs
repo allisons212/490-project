@@ -14,7 +14,7 @@ namespace _490Gui
         {
             DateTime programStartTime = DateTime.Now;
             // Sierra's path: C:/Users/Sierra Laney/Desktop/test.csv
-            Console.WriteLine("Enter the path for csv file: ");
+            // Console.WriteLine("Enter the path for csv file: ");
             string filePath = "C:/Users/Sierra Laney/Desktop/test.csv";
             processList = Parser.readProcessFile(filePath);
 

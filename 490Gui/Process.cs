@@ -54,6 +54,13 @@ public class Process
 		set { tat = computeTAT(entryTime, FinishTime); }
 	}
 
+	private int processThread;
+	public int ProcessThread
+    {
+		get { return processThread; }
+		set { processThread = value; }
+    }
+
 	public Process()
 	{
 		arrivalTime = 0;
