@@ -61,6 +61,14 @@ public class Process
 		set { processThread = value; }
 	}
 
+	private int timeRemaining;
+	public int TimeRemaining
+    {
+		get { return timeRemaining; }
+		set { timeRemaining = value; }
+
+	}
+
 	public Process()
 	{
 		arrivalTime = 0;
@@ -90,4 +98,9 @@ public class Process
 		Console.WriteLine(nTAT);
 		return nTAT;
 	}
+
+	public static int decreaseTime(Process process)
+    {
+		return process.TimeRemaining -= 1; 
+    }
 }
