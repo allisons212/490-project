@@ -130,10 +130,20 @@
             // numericUpDown1
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(547, 113);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(63, 22);
             this.numericUpDown1.TabIndex = 7;
             this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.numericUpDown1.ValueChanged += new System.EventHandler(this.NumericUpDown1_ValueChanged);
             // 
             // ms
@@ -154,7 +164,6 @@
             this.sysStatLabel.Size = new System.Drawing.Size(155, 25);
             this.sysStatLabel.TabIndex = 9;
             this.sysStatLabel.Text = "System Running";
-            this.sysStatLabel.Click += new System.EventHandler(this.sysStatLabel_Click);
             // 
             // openFileDialog1
             // 
