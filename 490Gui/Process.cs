@@ -76,7 +76,7 @@ public class Process
 	public static TimeSpan computeTAT(DateTime time1, DateTime time2)
 	{
 		TimeSpan tat = time2 - time1;
-		Console.WriteLine(tat);
+		//Console.WriteLine(tat);
 		return tat;
 	}
 
@@ -87,7 +87,7 @@ public class Process
 	public static TimeSpan computeNTAT(TimeSpan timespan, int serviceTime)
 	{
 		TimeSpan nTAT = new TimeSpan(timespan.Ticks / serviceTime);
-		Console.WriteLine(nTAT);
+		//Console.WriteLine(nTAT);
 		return nTAT;
 	}
 }

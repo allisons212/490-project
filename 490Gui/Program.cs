@@ -8,14 +8,14 @@ namespace _490Gui
 {
     static class Program
     {
-
+        private static DateTime programStartTime;
         static Queue<Process> processList = new Queue<Process>();
         static void Main(string[] args)
         {
-            DateTime programStartTime = DateTime.Now;
+            programStartTime = DateTime.Now;
             // Sierra's path: C:/Users/Sierra Laney/Desktop/test.csv
             // Console.WriteLine("Enter the path for csv file: ");
-            string filePath = "C:/Users/Sierra Laney/Desktop/test.csv";
+            string filePath = "C:/Users/LukeJ/OneDrive/Documents/test.txt";
             processList = Parser.readProcessFile(filePath);
 
             Thread thread1 = new Thread(new ThreadStart(selectProcess));
@@ -39,6 +39,11 @@ namespace _490Gui
                 var process = processList.Dequeue();
                 ThreadSim.executeProcess(process, 1000);
             }
+        }
+
+        public static DateTime getPrgmStrtTime()
+        {
+            return programStartTime;
         }
 
     }
