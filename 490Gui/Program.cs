@@ -9,7 +9,7 @@ namespace _490Gui
     static class Program
     {
 
-        static Queue<Process> processList = new Queue<Process>();
+        //static Queue<Process> processList = new Queue<Process>();
         [STAThreadAttribute] // needed to run openFileDialog in Form1.cs
         static void Main(string[] args)
         {

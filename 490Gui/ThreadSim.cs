@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace _490Gui
 {
@@ -22,22 +23,28 @@ namespace _490Gui
 		{
 			process.EntryTime = DateTime.Now;
 			process.ProcessThread = Thread.CurrentThread.ManagedThreadId;
-			Console.WriteLine(process.ProcessID + " is on thread " + process.ProcessThread);
-			if (process.ProcessThread.Equals("thread 3"))
+            Thread.CurrentThread.GetType().GetField("m_Name", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(Thread.CurrentThread, process.ProcessID); // set name for thread; this allows name to be regularly changed
+            Console.WriteLine(process.ProcessID + " is on thread " + process.ProcessThread);
+
+            // set names on GUI events
+            if (process.ProcessThread == 3)
             {
-				
+                // activate CPU1PanelUpdate method 
             }
-			else if (process.ProcessThread.Equals("thread 4"))
+
+            if (process.ProcessThread == 4)
             {
-				
+                // activate CPU2PanelUpdate method
             }
+			
 
 			for (int i = 0; i < process.ServiceTime; i++)
 			{
-				// Console.WriteLine(process.ProcessID + " is executing.");
+				Console.WriteLine(process.ProcessID + " is executing.");
 				Thread.Sleep(miliseconds);
 			}
 			process.FinishTime = DateTime.Now;
+
 			counter++;
 
 			long trial = computeCurrentThroughput(process.EntryTime);
@@ -71,6 +78,5 @@ namespace _490Gui
 			// Console.WriteLine(counter);
 			return counter;
 		}
-
 	}
 }

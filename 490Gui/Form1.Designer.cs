@@ -30,32 +30,32 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.startSysButton = new System.Windows.Forms.Button();
-            this.pauseSysButton = new System.Windows.Forms.Button();
-            this.waitingProcessQueue = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.startSysButton = new System.Windows.Forms.Button(); // start system button
+            this.pauseSysButton = new System.Windows.Forms.Button(); // pause system button
+            this.waitingProcessQueue = new System.Windows.Forms.Label(); // "Waiting process queue"
+            this.dataGridView1 = new System.Windows.Forms.DataGridView(); // data grid for waiting processes
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.sysProcess = new System.Diagnostics.Process();
             this.timeUnit = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown(); // up/down text area that determines time unit
             this.ms = new System.Windows.Forms.Label();
-            this.sysStatLabel = new System.Windows.Forms.Label();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.sysStatLabel = new System.Windows.Forms.Label(); // system running or system paused
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog(); // window to show what file to open
             this.eventLog1 = new System.Diagnostics.EventLog();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.currTPutLabel = new System.Windows.Forms.Label();
-            this.cpu1header = new System.Windows.Forms.Label();
-            this.cpu1execheader = new System.Windows.Forms.Label();
-            this.cpu1TR = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.cpu1TRShow = new System.Windows.Forms.Label();
-            this.cpu1ProcessExec = new System.Windows.Forms.Label();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView(); // results data grid table
+            this.currTPutLabel = new System.Windows.Forms.Label(); // current throughput label
+            this.cpu1header = new System.Windows.Forms.Label(); // "cpu 1"
+            this.cpu1execheader = new System.Windows.Forms.Label(); // label introducing what process is executing on cpu 1
+            this.cpu1TR = new System.Windows.Forms.Label(); // label introducing what time is remaining on cpu 1's process
+            this.panel1 = new System.Windows.Forms.Panel(); 
+            this.cpu1TRShow = new System.Windows.Forms.Label(); // shows the time remaining on cpu 1
+            this.cpu1ProcessExec = new System.Windows.Forms.Label(); // shows the process running on cpu 1
             this.panel2 = new System.Windows.Forms.Panel();
-            this.cpu2TRShow = new System.Windows.Forms.Label();
-            this.cpu2ProcessExec = new System.Windows.Forms.Label();
-            this.cpu2TR = new System.Windows.Forms.Label();
-            this.cpu2execheader = new System.Windows.Forms.Label();
-            this.cpu2header = new System.Windows.Forms.Label();
+            this.cpu2TRShow = new System.Windows.Forms.Label(); // shows the process running on cpu 2
+            this.cpu2ProcessExec = new System.Windows.Forms.Label(); // shows the process executing on cpu 2
+            this.cpu2TR = new System.Windows.Forms.Label(); // introduces the time remaining on cpu 2
+            this.cpu2execheader = new System.Windows.Forms.Label(); // introduces the process running on cpu 2
+            this.cpu2header = new System.Windows.Forms.Label(); // "CPU 2"
             this.parserBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -107,6 +107,7 @@
             this.dataGridView1.ShowEditingIcon = false;
             this.dataGridView1.Size = new System.Drawing.Size(333, 207);
             this.dataGridView1.TabIndex = 5;
+            
             // 
             // sysProcess
             // 
@@ -163,7 +164,7 @@
             this.sysStatLabel.Name = "sysStatLabel";
             this.sysStatLabel.Size = new System.Drawing.Size(155, 25);
             this.sysStatLabel.TabIndex = 9;
-            this.sysStatLabel.Text = "System Running";
+            this.sysStatLabel.Text = "System Paused";
             // 
             // openFileDialog1
             // 
