@@ -13,7 +13,11 @@ public class Parser
         Queue<Process> processList;
     }
 
-    public static Queue<Process> ReadProcessFile(string path)
+    // Summary: Reads data from a csv file, sets it to a process object, and adds to a queue
+    // of processes
+    // Params: String
+    // Return: Process Queue
+    public static Queue<Process> readProcessFile(string path)
     {
         var processTempList = new Queue<Process>();
         string[] lines = System.IO.File.ReadAllLines(path);
@@ -27,19 +31,19 @@ public class Parser
             {
                 if (count == 0)
                 {
-                    process.arrivalTime = int.Parse(column);
+                    process.ArriveTime = int.Parse(column);
                 }
                 else if (count == 1)
                 {
-                    process.processID = column;
+                    process.ProcessID = column;
                 }
                 else if (count == 2)
                 {
-                    process.serviceTime = int.Parse(column);
+                    process.ServiceTime = int.Parse(column);
                 }
                 else
                 {
-                    process.priority = int.Parse(column);
+                    process.Priority = int.Parse(column);
                 }
 
                 count++;

@@ -1,45 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace _490Gui
 {
     static class Program
     {
-        [DllImport("kernel32.dll")]
-        public static extern bool AllocConsole();
 
-        [DllImport("kernel32.dll")]
-        public static extern bool FreeConsole();
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
+        //static Queue<Process> processList = new Queue<Process>();
+        [STAThreadAttribute] // needed to run openFileDialog in Form1.cs
         static void Main(string[] args)
         {
-            AllocConsole();
-            // cout hey what file
-            // cin filepath
-            string filePath;
-            Console.WriteLine("Please type filepath: \n");
-            filePath = Console.ReadLine();
-            Console.WriteLine("Path is " + filePath);
-            FreeConsole();
-            //string filePath = "C:/Users/Sierra Laney/Desktop/test.csv";
-            ProgArgs progArgs = new ProgArgs();
-            progArgs.ProcessList =  Parser.ReadProcessFile(filePath);
-            progArgs.ThreadObj = new ThreadSim();
-            progArgs.ThreadObj.ExecuteProcess(progArgs.ProcessList);
-            Console.ReadLine();
+            DateTime programStartTime = DateTime.Now;
+
+            // comment block is code for if running code to console without GUI
+
+            /**string filePath = "C:/Users/cowca/Documents/490csv.csv";
+            processList = Parser.readProcessFile(filePath);
+
+            Thread thread1 = new Thread(new ThreadStart(selectProcess));
+            Thread thread2 = new Thread(new ThreadStart(selectProcess));
+            thread1.Start();
+            thread2.Start();
+            Console.ReadLine();**/
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            // generate new form
+
+            Form1 f = new Form1();
+
+            // make form sit at top of windows
+
+            f.TopMost = true;
+
+            // run application and form
+
+            Application.Run(f);
         }
+
+        
+        
+
     }
 
-    
 }
-
