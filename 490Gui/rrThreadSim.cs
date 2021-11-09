@@ -7,11 +7,11 @@ using System.Reflection;
 
 namespace _490Gui
 {
-	public class ThreadSim
+	public class rrThreadSim
 	{
 		public static int counter = 0;
 
-		public ThreadSim()
+		public rrThreadSim()
         {
 
         }

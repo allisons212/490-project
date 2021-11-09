@@ -16,18 +16,17 @@ namespace _490Gui
     public partial class Form1 : Form
     {
         //String[] processesChosen;
-        static Queue<Process> processList = new Queue<Process>(); // list of processes pulled from csv for threads
-        Thread thread1; // first thread
-        Thread thread2; // second thread
-        int secondsElapsed; // time passed in program
+        static Queue<Process> CPU1processList = new Queue<Process>(); // list of processes pulled from csv for thread 1 (HRRN)
+        static Queue<Process> CPU2processList = new Queue<Process>(); // list of processes pulled from csv for thread 2 (RR)
+        Thread thread1; // first thread (HRRN)
+        Thread thread2; // second thread (RR)
         bool started = false; // bool tracking if process has started already
+        
         /**
-* default constructor for Form1
-**/
-
+        * default constructor for Form1
+        */
         public Form1()
         {
-
             // initialize GUI
             InitializeComponent();
 
@@ -36,7 +35,8 @@ namespace _490Gui
             string file = openFileDialog1.FileName;
 
             // load processList with data from 
-            processList = Parser.readProcessFile(file);
+            CPU1processList = Parser.readProcessFile(file);
+            CPU2processList = Parser.readProcessFile(file);
 
             // datagrid generation assumes a non-blank csv file is used
 
@@ -60,16 +60,21 @@ namespace _490Gui
             for (int i = 0; i < l.Length; i++)
             {
                 DataRow row = table.NewRow();
-                table.Rows.Add(processList.ElementAt<Process>(i).ProcessID, processList.ElementAt<Process>(i).ArriveTime, processList.ElementAt<Process>(i).ServiceTime);
+                
+                table.Rows.Add(CPU1processList.ElementAt<Process>(i).ProcessID, CPU1processList.ElementAt<Process>(i).ArriveTime, CPU1processList.ElementAt<Process>(i).ServiceTime);
+                
+                
             }
 
 
             // initialize log table with these values
-            dataGridView2.DataSource = table;
+            datalogHRRN.DataSource = table;
 
 
             // this section needs to be updated so that it only initializes with processes at time 0
             // then can update table based on time variable - front end or back end depending on where that is stored, needs to be closely tied to the execute thread
+
+            // wait process queue initialization
 
             DataTable table2 = new DataTable(); // table used to populate data grid
             String[] headers2 = { "Process Name", "Service Time"};
@@ -85,19 +90,21 @@ namespace _490Gui
             // for each line in csv
             for (int i = 0; i < l2.Length; i++)
             {
-                DataRow row = table2.NewRow();
-                table2.Rows.Add(processList.ElementAt<Process>(i).ProcessID, processList.ElementAt<Process>(i).ServiceTime);
+                if (CPU1processList.ElementAt<Process>(i).ArriveTime == 0)
+                {
+                    DataRow row = table2.NewRow();
+                    table2.Rows.Add(CPU1processList.ElementAt<Process>(i).ProcessID, CPU1processList.ElementAt<Process>(i).ServiceTime);
+                }
             }
 
+            // initialize log tables with these values - since both are using the same dataset, can initialize with same table
+            HRRNWaitProcessQueue.DataSource = table2;
+            rrWaitProcessQueue.DataSource = table2;
 
-            // initialize log table with these values
-            dataGridView1.DataSource = table2;
+            // this assumes thread1 is meant to start at time 0 and there is at least one thread
+            thread1 = new Thread(new ThreadStart(SelectProcess));
+            thread2 = new Thread(new ThreadStart(SelectProcess2));
 
-
-            // initialize starting threads
-
-
-            
         }
 
         // events for GUI
@@ -155,39 +162,29 @@ namespace _490Gui
             this.sysStatLabel.Text = "System Running"; // changes text on system status
             if (started == false)
             {
-                // this assumes thread1 is meant to start at time 0 and there is at least one thread
-                thread1 = new Thread(new ThreadStart(SelectProcess));
-
-                // 
-                if (processList.Count > 1)
-                {
-                    thread2 = new Thread(new ThreadStart(SelectProcess));
-
-                }
-
-
+                
                 // begin running threads
 
                 thread1.Start();
                 this.cpu1ProcessExec.Text = thread1.Name;
 
-                if (processList.Count > 1)
-                {
-                    thread2.Start();
-                    this.cpu2ProcessExec.Text = thread2.Name;
-                }
+                thread2.Start();
+                this.cpu2ProcessExec.Text = thread2.Name;
+
+                timeElapsed.Start();
                 started = true;
             }
             else
             {
-                if (thread1.IsAlive == false)
+                if (thread1.IsAlive == false) // checks to see if thread is running
                 {
                     thread1.Resume();
                 }
-                if (!thread2.IsAlive == false)
+                if (thread2.IsAlive == false) // checks to see if thread is running
                 {
                     thread2.Resume();
                 }
+                timeElapsed.Enabled = true;
             }
             
         }
@@ -200,6 +197,14 @@ namespace _490Gui
         }
 
         /**
+         * event for every second in the program (once the timer is initialized and started)
+         */
+        public static void timeEvent(object source, EventArgs e)
+        {
+            
+        }
+
+        /**
          * event handler code for when the pause system button is clicked
         */
         public delegate void PauseSysButton_ClickEventHandler(object source, EventArgs args);
@@ -207,7 +212,7 @@ namespace _490Gui
         private void PauseSysButton_Click(object sender, EventArgs e)
         {
             this.sysStatLabel.Text = "System Paused"; // changes text on system status
-
+            timeElapsed.Enabled = false;
             if (thread1.IsAlive == true)
             {
                 thread1.Suspend();
@@ -217,6 +222,7 @@ namespace _490Gui
                 thread2.Suspend();
             }
         }
+
         protected virtual void OnPauseSysClick()
         {
             if (PauseSysClicked != null)
@@ -254,21 +260,43 @@ namespace _490Gui
             
         }
 
-        // Summary: Thread will select a new process from the queue
-        // and then send the process to be executed.
-        // Params: time
+        
+
+        // Summary: Thread will select a new process from the queue of the processList input
+        // and then send the process to be executed. (HRRN)
+        // Params: processList
         // Return: None
         public void SelectProcess()
         {
-            while (processList.Count != 0)
+            while (CPU1processList.Count != 0)
             {
-                var process = processList.Dequeue();
-                ThreadSim.executeProcess(process, Decimal.ToInt32(this.numericUpDown1.Value));
+                var process = CPU1processList.Dequeue();
+                //cpu1TRShow.Text = (process.ServiceTime).ToString();
+                cpu1ProcessExec.Text = process.ProcessID;
+                hrrnThreadSim.executeProcess(process, Decimal.ToInt32(this.timeUnitUpDown.Value));
             }
         }
 
-        
+        // Summary: same as the former function (SelectProcess) but for the round robin thread
+        // Params: processList
+        // Return: None
+        public void SelectProcess2()
+        {
+            while (CPU2processList.Count != 0)
+            {
+                var process2 = CPU2processList.Dequeue();
+                //cpu2TRShow.Text = (process2.ServiceTime).ToString();
+                cpu2ProcessExec.Text = process2.ProcessID;
+                rrThreadSim.executeProcess(process2, Decimal.ToInt32(this.timeUnitUpDown.Value));
+            }
+        }
 
+        // on every tick (1 second) this runs
+        private void timeElapsed_Tick(object sender, EventArgs e)
+        {
+            //int temp = Convert.ToInt32(cpu1TRShow.ToString()) - 1;
+            //cpu1TRShow.Equals(temp);
+        }
     }
 
     
