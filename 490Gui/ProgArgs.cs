@@ -8,7 +8,7 @@ namespace _490Gui
 {
     public class ProgArgs: EventArgs
     {
-        public hrrnThreadSim ThreadObj { get; set; }
+        public ThreadSim ThreadObj { get; set; }
 
         public Queue<Process> ProcessList { get; set; }
     }
