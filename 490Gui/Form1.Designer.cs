@@ -183,7 +183,7 @@
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.FileName = "490csv.csv";
             // 
             // eventLog1
             // 

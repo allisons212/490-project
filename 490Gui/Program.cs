@@ -14,9 +14,7 @@ namespace _490Gui
         static void Main(string[] args)
         {
             DateTime programStartTime = DateTime.Now;
-
-            // comment block is code for if running code to console without GUI
-
+            
             /**string filePath = "C:/Users/cowca/Documents/490csv.csv";
             processList = Parser.readProcessFile(filePath);
 
