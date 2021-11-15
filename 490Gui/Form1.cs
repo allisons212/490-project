@@ -260,18 +260,94 @@ namespace _490Gui
         // Return: None
         public void SelectProcess()
         {
-            while (processList.Count != 0)
+            Process process;
+            var counter = processList.Count;
+            bool executedServiceTime;
+            // set names on GUI events
+            if (Thread.CurrentThread.ManagedThreadId == 3)
             {
-                var process = processList.Dequeue();
-                ThreadSim.executeProcess(process, Decimal.ToInt32(this.numericUpDown1.Value));
+                while (counter != 0)
+                {
+                    if (processList.Peek().EntryTime != null)
+                        processList.Peek().EntryTime = DateTime.Now;
+                    long executionTime = (processList.Peek().EntryTime.Ticks - Program.programStartTime.Ticks) / 10000000;
+                    int arrivalTime = processList.Peek().ArriveTime;
+                    //int counter;
+                    // var process = processList.Dequeue();
+                    if (arrivalTime <= executionTime)
+                    {
+                        process = processList.Dequeue();
+                        counter--;
+                        executedServiceTime = ThreadSim.executeRoundRobin(process, Decimal.ToInt32(this.numericUpDown1.Value), 5); //This would be changed to call HRRN and RR respectively TODO CHANGE THE 5 VALUE TO INPUT QUANTUM TIME
+                    }
+                    else
+                    {
+                        Thread.Sleep(1000);
+                        continue;
+                    }
+                    if (executedServiceTime || process.ServiceTime <= 0)
+                    {
+                        process.ServiceTime = 0;
+                        Console.WriteLine("***********      " + process.ProcessID + " has exited. Program List Count: " + processList.Count + "      ************");
+                        // Console.WriteLine("***********      " + processList.Peek().ProcessID + "      ************");
+                    }
+                    else
+                    {
+                        processList.Enqueue(process);
+                        process.ServiceTime = process.ServiceTime - 5; //TODO CHANGE THIS VALUE TO INPUT QUANTUM TIME
+                        counter++;
+                    }
+                }
             }
+
+            if (Thread.CurrentThread.ManagedThreadId == 4)
+            {
+                //die here idiot
+             }
+
+            //**************************************
+            // BELOW CODE GOES IN THE SETS OF IF's
+            //**************************************
+
+
+
+
+            //while (counter != 0)
+            //{
+            //    //int counter;
+            //    // var process = processList.Dequeue();
+            //    if (processList.Peek().ArriveTime >= (processList.Peek().EntryTime.Ticks - Program.programStartTime.Ticks) / 10000000 || processList.Peek().ArriveTime <= (processList.Peek().EntryTime.Ticks - Program.programStartTime.Ticks) / 10000000)
+            //    {
+            //        process = processList.Dequeue();
+            //        counter--;
+            //        executedServiceTime = ThreadSim.executeRoundRobin(process, Decimal.ToInt32(this.numericUpDown1.Value), 5); //This would be changed to call HRRN and RR respectively TODO CHANGE THE 5 VALUE TO INPUT QUANTUM TIME
+            //    }
+            //    else
+            //    {
+            //        // Thread.Sleep(1000);
+            //        continue;
+            //    }
+            //    if (executedServiceTime || process.ServiceTime <= 0)
+            //    {
+            //        process.ServiceTime = 0;
+            //        Console.WriteLine("***********      " + process.ProcessID + " has exited. Program List Count: " + processList.Count + "      ************");
+            //        // Console.WriteLine("***********      " + processList.Peek().ProcessID + "      ************");
+            //    }
+            //    else
+            //    {
+            //        processList.Enqueue(process);
+            //        process.ServiceTime = process.ServiceTime - 5; //TODO CHANGE THIS VALUE TO INPUT QUANTUM TIME
+            //        counter++;
+            //    }
+            //}
+                //**************************************
+                // ABOVE CODE GOES IN THE SETS OF IF's
+                //**************************************
         }
 
-        
+        private void parserBindingSource_CurrentChanged(object sender, EventArgs e)
+        {
 
+        }
     }
-
-    
-
-
 }

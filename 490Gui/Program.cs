@@ -10,10 +10,11 @@ namespace _490Gui
     {
 
         //static Queue<Process> processList = new Queue<Process>();
+        public static DateTime programStartTime;
         [STAThreadAttribute] // needed to run openFileDialog in Form1.cs
         static void Main(string[] args)
         {
-            DateTime programStartTime = DateTime.Now;
+            programStartTime = DateTime.Now;
 
             // comment block is code for if running code to console without GUI
 
