@@ -10,6 +10,9 @@ namespace _490Gui
 	public class ThreadSim
 	{
 		public static int counter = 0;
+		public static TimeSpan TATSummation = default;
+		public static int TATCounter = 0;
+		public static TimeSpan avgTATComputation = default;
 
 		public ThreadSim()
         {
@@ -64,6 +67,15 @@ namespace _490Gui
 					executedServiceTime = true;
 					numberOfExecutions++;
 				}
+				process.FinishTime = DateTime.Now;
+				process.TAT = Process.computeTAT(process.EntryTime, process.FinishTime); // computes tat for each process
+				TATSummation += process.TAT; // used for the average system tat computation
+				TATCounter++; // used foro the average system tat computation
+				avgTATComputation = new TimeSpan(TATSummation.Ticks / TATCounter); // computation for average tat
+				Console.WriteLine(process.ProcessID + "'s tat is " + process.TAT);
+				Console.WriteLine("current avg tat " + avgTATComputation);
+				long trial = computeCurrentThroughput(process.EntryTime);
+
 			}
 			else
             {
@@ -77,11 +89,10 @@ namespace _490Gui
 				//process.ServiceTime -= quantumTime;
             }
 			//Console.WriteLine(process.ProcessID + " is executing with RR. Count: " + numberOfExecutions);
-			process.FinishTime = DateTime.Now;
+
 
 			counter++;
 
-			long trial = computeCurrentThroughput(process.EntryTime);
 			return executedServiceTime;
 		}
 
@@ -95,17 +106,6 @@ namespace _490Gui
 			Thread.CurrentThread.GetType().GetField("m_Name", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(Thread.CurrentThread, process.ProcessID); // set name for thread; this allows name to be regularly changed
 			Console.WriteLine(process.ProcessID + " is on thread " + process.ProcessThread);
 
-			// set names on GUI events
-			if (process.ProcessThread == 3)
-			{
-				// activate CPU1PanelUpdate method 
-			}
-
-			if (process.ProcessThread == 4)
-			{
-				// activate CPU2PanelUpdate method
-			}
-
 
 			for (int i = 0; i < process.ServiceTime; i++)
 			{
@@ -113,6 +113,13 @@ namespace _490Gui
 				Thread.Sleep(miliseconds);
 			}
 			process.FinishTime = DateTime.Now;
+			process.TAT = Process.computeTAT(process.EntryTime, process.FinishTime); // computes tat for each process
+			TATSummation += process.TAT; // used for the average system tat computation
+			TATCounter++; // used foro the average system tat computation
+			avgTATComputation = new TimeSpan(TATSummation.Ticks / TATCounter); // computation for average tat
+			Console.WriteLine(process.ProcessID + "'s tat is " + process.TAT);
+			Console.WriteLine("current avg tat " + avgTATComputation);
+
 
 			counter++;
 
@@ -146,6 +153,25 @@ namespace _490Gui
 			}
 			// Console.WriteLine(counter);
 			return counter;
+		}
+
+		// Summary: Sums the tat time of each process that have exited and divides it by the number of processes that have exited
+		// Params: timespan array
+		// Return: timespan
+		public TimeSpan computeAvgTAT(TimeSpan[] TATs)
+		{
+			TimeSpan sumTAT = default;
+			int counter = 0;
+
+			for (int i=0; i < TATs.Length; i++)
+            {
+				sumTAT += TATs[i];
+				counter++;
+            }
+
+			TimeSpan avgTAT = new TimeSpan(sumTAT.Ticks / counter);
+
+			return avgTAT;
 		}
 	}
 }
