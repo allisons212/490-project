@@ -67,13 +67,30 @@ public class Process
 		set { processThread = value; }
 	}
 
-    // process default constructor
+	// waiting time 
+	private DateTime availableProcessesTime;
+	public DateTime AvailableProcessesTime
+	{
+		get { return availableProcessesTime; }
+		set { availableProcessesTime = value; }
+	}
+
+	// waiting time 
+	private long responseRatio;
+	public long ResponseRatio
+	{
+		get { return responseRatio; }
+		set { responseRatio = value; }
+	}
+
+	// process default constructor
 	public Process()
 	{
 		arrivalTime = 0;
 		serviceTime = 0;
 		processID = "";
 		priority = 0;
+		availableProcessesTime = default; 
 	}
 
 	// Summary: Calculates the elapsed time from when a process arrived to when
@@ -97,4 +114,12 @@ public class Process
 		Console.WriteLine(nTAT);
 		return nTAT;
 	}
+
+	public int CompareTo(Process process)
+    {
+		if (process == null)
+			return 1;
+		else
+			return this.ResponseRatio.CompareTo(process.ResponseRatio);
+    }
 }

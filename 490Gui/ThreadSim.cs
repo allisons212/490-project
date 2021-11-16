@@ -62,7 +62,7 @@ namespace _490Gui
 			{
 				for (int i = 0; i < process.ServiceTime; i++)
 				{
-					Console.WriteLine(process.ProcessID + " is executing with RR. Count: " + numberOfExecutions);
+					//Console.WriteLine(process.ProcessID + " is executing with RR. Count: " + numberOfExecutions);
 					Thread.Sleep(miliseconds);
 					executedServiceTime = true;
 					numberOfExecutions++;
@@ -72,8 +72,8 @@ namespace _490Gui
 				TATSummation += process.TAT; // used for the average system tat computation
 				TATCounter++; // used foro the average system tat computation
 				avgTATComputation = new TimeSpan(TATSummation.Ticks / TATCounter); // computation for average tat
-				Console.WriteLine(process.ProcessID + "'s tat is " + process.TAT);
-				Console.WriteLine("current avg tat " + avgTATComputation);
+				//Console.WriteLine(process.ProcessID + "'s tat is " + process.TAT);
+				//Console.WriteLine("current avg tat " + avgTATComputation);
 				long trial = computeCurrentThroughput(process.EntryTime);
 
 			}
@@ -81,7 +81,7 @@ namespace _490Gui
             {
 				for (int i =0; i< quantumTime; i++)
                 {
-					Console.WriteLine(process.ProcessID + " is executing with RR. Count: " + numberOfExecutions);
+					//Console.WriteLine(process.ProcessID + " is executing with RR. Count: " + numberOfExecutions);
 					Thread.Sleep(miliseconds);
 					executedServiceTime = false;
 					numberOfExecutions++;
@@ -109,7 +109,7 @@ namespace _490Gui
 
 			for (int i = 0; i < process.ServiceTime; i++)
 			{
-				Console.WriteLine(process.ProcessID + " is executing.");
+				Console.WriteLine(process.ProcessID + " is executing with HRRN. Count: " + i);
 				Thread.Sleep(miliseconds);
 			}
 			process.FinishTime = DateTime.Now;

@@ -302,8 +302,40 @@ namespace _490Gui
 
             if (Thread.CurrentThread.ManagedThreadId == 4)
             {
-             
+                List<Process> processListArray = processList.ToList();
+                List <Process> availableProcessesList = new List<Process>();
+                while (processListArray.Count != 0)
+                    {
+                    for (int i = 0; i < processListArray.Count; i++)
+                    {
+                        if (processListArray[i].ArriveTime <= (processListArray[i].EntryTime.Ticks - Program.programStartTime.Ticks) / 10000000)
+                        {
+                            availableProcessesList.Add(processListArray[i]);
+                            processListArray[i].AvailableProcessesTime = DateTime.Now;
+                            processListArray.Remove(processListArray[i]);
+                        }
+                    }
+                    if (availableProcessesList.Count > 1)
+                    {
+                        calculateResponseRatio(availableProcessesList);
+                    }
+                    for (int i = 0; i < availableProcessesList.Count; i++)
+                    {
+                        ThreadSim.executeHRRN(availableProcessesList[i], Decimal.ToInt32(this.numericUpDown1.Value));
+                        availableProcessesList.Remove(availableProcessesList[i]);
+                    }
+                }
             }
+        }
+
+        public void calculateResponseRatio(List<Process> processList)
+        {
+            for (int i=0; i<=processList.Count; i++)
+            {
+                var waitingTime = DateTime.Now.Ticks - processList[i].AvailableProcessesTime.Ticks;
+                processList[i].ResponseRatio = (waitingTime + processList[i].ServiceTime) / processList[i].ServiceTime;
+            }
+            processList.Sort();
         }
 
         private void parserBindingSource_CurrentChanged(object sender, EventArgs e)
