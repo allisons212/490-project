@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class Process
+public class Process : ICloneable, IComparable
 {
     // time process arrives in queue
 	private int arrivalTime;
@@ -76,8 +76,8 @@ public class Process
 	}
 
 	// waiting time 
-	private long responseRatio;
-	public long ResponseRatio
+	private double responseRatio;
+	public double ResponseRatio
 	{
 		get { return responseRatio; }
 		set { responseRatio = value; }
@@ -115,11 +115,23 @@ public class Process
 		return nTAT;
 	}
 
-	public int CompareTo(Process process)
+	public int CompareTo(object process)
     {
 		if (process == null)
 			return 1;
-		else
-			return this.ResponseRatio.CompareTo(process.ResponseRatio);
+		Process temp = process as Process;
+		return this.ResponseRatio.CompareTo(temp.ResponseRatio);
+    }
+
+	public object Clone()
+    {
+		return new Process
+		{
+			ArriveTime = this.ArriveTime,
+			ServiceTime = this.ServiceTime,
+			ProcessID = this.ProcessID,
+			Priority = this.Priority
+
+		};
     }
 }

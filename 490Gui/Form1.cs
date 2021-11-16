@@ -262,6 +262,13 @@ namespace _490Gui
         {
             Process process;
             var counter = processList.Count;
+            List<Process> processListArray = processList.ToList();
+            var HRRNProcessList = new List<Process>();
+            foreach(var elt in processListArray)
+            {
+                HRRNProcessList.Add((Process)elt.Clone());
+            }
+            //var HRRNProcessList = DeepCopy(processListArray);
             bool executedServiceTime;
             // set names on GUI events
             if (Thread.CurrentThread.ManagedThreadId == 3)
@@ -302,37 +309,56 @@ namespace _490Gui
 
             if (Thread.CurrentThread.ManagedThreadId == 4)
             {
-                List<Process> processListArray = processList.ToList();
+                // List<Process> processListArray = processList.ToList();
                 List <Process> availableProcessesList = new List<Process>();
-                while (processListArray.Count != 0)
+                List<Process> removeList = new List<Process>(); 
+                while (HRRNProcessList.Count != 0)
                     {
-                    for (int i = 0; i < processListArray.Count; i++)
+                    
+                    // Grab all items that are ready to be executed and add them to availableProcessList
+                    for (int i = 0; i < HRRNProcessList.Count; i++)
                     {
-                        if (processListArray[i].ArriveTime <= (processListArray[i].EntryTime.Ticks - Program.programStartTime.Ticks) / 10000000)
+                        var executionTime2 = (DateTime.Now.Ticks - Program.programStartTime.Ticks) / 10000000;
+                        var arrivalTime2 = HRRNProcessList[i].ArriveTime;
+                        if (HRRNProcessList[i].ArriveTime <= executionTime2)
                         {
-                            availableProcessesList.Add(processListArray[i]);
-                            processListArray[i].AvailableProcessesTime = DateTime.Now;
-                            processListArray.Remove(processListArray[i]);
+                            HRRNProcessList[i].AvailableProcessesTime = DateTime.Now;
+                            availableProcessesList.Add(HRRNProcessList[i]);
+                            removeList.Add(HRRNProcessList[i]);
                         }
                     }
+
+                    // Remove items from HRRNProcessList that will be executed
+                    for (int i = 0; i<removeList.Count; i++)
+                    {
+                        if(HRRNProcessList.Contains(removeList[i]))
+                        {
+                            HRRNProcessList.Remove(removeList[i]);
+                        }
+                    }
+                    removeList.Clear(); //clear remove list so we can do it again
+
+                    // If there are more than 1 items in availableProcessList, calculate the response ratio and sort them accordingly
                     if (availableProcessesList.Count > 1)
                     {
                         calculateResponseRatio(availableProcessesList);
                     }
+
+                    // Execute all items in availableProcessList
                     for (int i = 0; i < availableProcessesList.Count; i++)
                     {
                         ThreadSim.executeHRRN(availableProcessesList[i], Decimal.ToInt32(this.numericUpDown1.Value));
-                        availableProcessesList.Remove(availableProcessesList[i]);
                     }
+                    availableProcessesList.Clear();
                 }
             }
         }
 
         public void calculateResponseRatio(List<Process> processList)
         {
-            for (int i=0; i<=processList.Count; i++)
+            for (int i=0; i<processList.Count; i++)
             {
-                var waitingTime = DateTime.Now.Ticks - processList[i].AvailableProcessesTime.Ticks;
+                var waitingTime = Convert.ToDouble(DateTime.Now.Ticks - processList[i].AvailableProcessesTime.Ticks) / 10000000;
                 processList[i].ResponseRatio = (waitingTime + processList[i].ServiceTime) / processList[i].ServiceTime;
             }
             processList.Sort();
