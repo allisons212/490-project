@@ -1,43 +1,43 @@
 ﻿using System;
 
-public class Process
+public class Process : ICloneable, IComparable
 {
-    // time process arrives in queue
+	// time process arrives in queue
 	private int arrivalTime;
 	public int ArriveTime
 	{
 		get { return arrivalTime; }
 		set { arrivalTime = value; }
 	}
-    // time process takes
+	// time process takes
 	private int serviceTime;
 	public int ServiceTime
 	{
 		get { return serviceTime; }
 		set { serviceTime = value; }
 	}
-    // ID of process
+	// ID of process
 	private string processID;
 	public string ProcessID
 	{
 		get { return processID; }
 		set { processID = value; }
 	}
-    // priority of process in list of processes
+	// priority of process in list of processes
 	private int priority;
 	public int Priority
 	{
 		get { return priority; }
 		set { priority = value; }
 	}
-    // time process entered queue
+	// time process entered queue
 	private DateTime entryTime;
 	public DateTime EntryTime
 	{
 		get { return entryTime; }
 		set { entryTime = value; }
 	}
-    // finish time of process
+	// finish time of process
 	private DateTime finishTime;
 	public DateTime FinishTime
 	{
@@ -45,21 +45,37 @@ public class Process
 		set { finishTime = value; }
 	}
 
-    // how long a process waits relative to the amount of time it takes to execute
-    private TimeSpan ntat;
+	// time process takes
+	private int initialServiceTime;
+	public int InitialServiceTime
+	{
+		get { return initialServiceTime; }
+		set { initialServiceTime = value; }
+	}
+
+	// finish time in int
+	private int intFinishTime;
+	public int IntFinishTime
+	{
+		get { return intFinishTime; }
+		set { intFinishTime = value; }
+	}
+
+	// how long a process waits relative to the amount of time it takes to execute
+	private TimeSpan ntat;
 	public TimeSpan NTAT
 	{
 		get { return ntat; }
 		set { ntat = computeNTAT(tat, serviceTime); }
 	}
-    // the elapsed time from when a process arrived to when the process finishes
-    private TimeSpan tat;
+	// the elapsed time from when a process arrived to when the process finishes
+	private TimeSpan tat;
 	public TimeSpan TAT
 	{
 		get { return tat; }
 		set { tat = computeTAT(entryTime, FinishTime); }
 	}
-    // thread of process
+	// thread of process
 	private int processThread;
 	public int ProcessThread
 	{
@@ -67,13 +83,30 @@ public class Process
 		set { processThread = value; }
 	}
 
-    // process default constructor
+	// waiting time 
+	private DateTime availableProcessesTime;
+	public DateTime AvailableProcessesTime
+	{
+		get { return availableProcessesTime; }
+		set { availableProcessesTime = value; }
+	}
+
+	// waiting time 
+	private double responseRatio;
+	public double ResponseRatio
+	{
+		get { return responseRatio; }
+		set { responseRatio = value; }
+	}
+
+	// process default constructor
 	public Process()
 	{
 		arrivalTime = 0;
 		serviceTime = 0;
 		processID = "";
 		priority = 0;
+		availableProcessesTime = default;
 	}
 
 	// Summary: Calculates the elapsed time from when a process arrived to when
@@ -96,5 +129,25 @@ public class Process
 		TimeSpan nTAT = new TimeSpan(timespan.Ticks / serviceTime);
 		Console.WriteLine(nTAT);
 		return nTAT;
+	}
+
+	public int CompareTo(object process)
+	{
+		if (process == null)
+			return 1;
+		Process temp = process as Process;
+		return this.ResponseRatio.CompareTo(temp.ResponseRatio);
+	}
+
+	public object Clone()
+	{
+		return new Process
+		{
+			ArriveTime = this.ArriveTime,
+			ServiceTime = this.ServiceTime,
+			ProcessID = this.ProcessID,
+			Priority = this.Priority
+
+		};
 	}
 }

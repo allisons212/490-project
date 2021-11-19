@@ -40,6 +40,7 @@ public class Parser
                 else if (count == 2)
                 {
                     process.ServiceTime = int.Parse(column);
+                    process.InitialServiceTime = process.ServiceTime;
                 }
                 else
                 {

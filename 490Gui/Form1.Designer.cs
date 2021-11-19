@@ -61,7 +61,7 @@
             this.RRTimeSliceLabel = new System.Windows.Forms.Label();
             this.rrTSLength = new System.Windows.Forms.NumericUpDown();
             this.waitProcessQueueLabel2 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.rrDatalog = new System.Windows.Forms.DataGridView();
             this.currAvgnTATLabel2 = new System.Windows.Forms.Label();
             this.nTATLabelHRRN = new System.Windows.Forms.Label();
             this.nTATlabelRR = new System.Windows.Forms.Label();
@@ -74,7 +74,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.parserBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rrWaitProcessQueue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rrTSLength)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rrDatalog)).BeginInit();
             this.SuspendLayout();
             // 
             // startSysButton
@@ -160,7 +160,6 @@
             0,
             0,
             0});
-            this.timeUnitUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown1_ValueChanged);
             // 
             // ms
             // 
@@ -361,7 +360,7 @@
             this.rrTSLength.TabIndex = 22;
             this.rrTSLength.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.rrTSLength.Value = new decimal(new int[] {
-            2,
+            5,
             0,
             0,
             0});
@@ -376,15 +375,15 @@
             this.waitProcessQueueLabel2.TabIndex = 23;
             this.waitProcessQueueLabel2.Text = "Waiting Process Queue:";
             // 
-            // dataGridView1
+            // rrDatalog
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(760, 404);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(672, 158);
-            this.dataGridView1.TabIndex = 24;
+            this.rrDatalog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.rrDatalog.Location = new System.Drawing.Point(760, 404);
+            this.rrDatalog.Name = "rrDatalog";
+            this.rrDatalog.RowHeadersWidth = 51;
+            this.rrDatalog.RowTemplate.Height = 24;
+            this.rrDatalog.Size = new System.Drawing.Size(672, 158);
+            this.rrDatalog.TabIndex = 24;
             // 
             // currAvgnTATLabel2
             // 
@@ -421,7 +420,7 @@
             this.Controls.Add(this.nTATlabelRR);
             this.Controls.Add(this.nTATLabelHRRN);
             this.Controls.Add(this.currAvgnTATLabel2);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.rrDatalog);
             this.Controls.Add(this.waitProcessQueueLabel2);
             this.Controls.Add(this.rrTSLength);
             this.Controls.Add(this.RRTimeSliceLabel);
@@ -452,7 +451,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.parserBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rrWaitProcessQueue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rrTSLength)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rrDatalog)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -492,7 +491,7 @@
         private System.Windows.Forms.Label RRTimeSliceLabel;
         private System.Windows.Forms.Label waitProcessQueueLabel2;
         private System.Windows.Forms.Label currAvgnTATLabel2;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView rrDatalog;
         private System.Windows.Forms.Label nTATLabelHRRN;
         private System.Windows.Forms.Label nTATlabelRR;
     }
