@@ -38,7 +38,7 @@ namespace _490Gui
 				Thread.Sleep(miliseconds);
 			}
 			process.FinishTime = DateTime.Now;
-
+			
 			counter++;
 
 			long trial = computeCurrentThroughput(process.EntryTime);
@@ -102,21 +102,25 @@ namespace _490Gui
 		public static void executeHRRN(Process process, int miliseconds)
 		{
 			process.EntryTime = DateTime.Now;
+			process.InitialServiceTime = process.ServiceTime;
 			process.ProcessThread = Thread.CurrentThread.ManagedThreadId;
 			Thread.CurrentThread.GetType().GetField("m_Name", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(Thread.CurrentThread, process.ProcessID); // set name for thread; this allows name to be regularly changed
 			Console.WriteLine(process.ProcessID + " is on thread " + process.ProcessThread);
+			int ticksElapsed = 0;
 
 
 			for (int i = 0; i < process.ServiceTime; i++)
 			{
 				Console.WriteLine(process.ProcessID + " is executing with HRRN. Count: " + i);
 				Thread.Sleep(miliseconds);
+				ticksElapsed++;
 			}
 			process.FinishTime = DateTime.Now;
 			process.TAT = Process.computeTAT(process.EntryTime, process.FinishTime); // computes tat for each process
 			TATSummation += process.TAT; // used for the average system tat computation
 			TATCounter++; // used foro the average system tat computation
 			avgTATComputation = new TimeSpan(TATSummation.Ticks / TATCounter); // computation for average tat
+			//process.IntFinishTime = ticksElapsed;
 			Console.WriteLine(process.ProcessID + "'s tat is " + process.TAT);
 			Console.WriteLine("current avg tat " + avgTATComputation);
 

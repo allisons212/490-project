@@ -99,6 +99,7 @@ public class Process : ICloneable, IComparable
 		set { responseRatio = value; }
 	}
 
+
 	// process default constructor
 	public Process()
 	{
