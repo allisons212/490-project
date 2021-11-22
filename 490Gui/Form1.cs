@@ -17,7 +17,8 @@ namespace _490Gui
     {
         //String[] processesChosen;
         static Queue<Process> processList = new Queue<Process>(); // list of processes pulled from csv for threads
-        static List<Process> hrrnProcessList = new List<Process>(); // list of processes for hrrn
+        static List<Process> HRRNProcessList = new List<Process>(); // list of processes for hrrn
+        static List<Process> HRRNwaitlist = new List<Process>(); // for HRRNWaitProcessQueue to pull processes from to show on queue
         static List<Process> rrFinishedProcess = new List<Process>(); // completed processes on rr side
         static List<Process> hrrnFinishedProcess = new List<Process>(); // completed processes on hrrn side
 
@@ -30,6 +31,7 @@ namespace _490Gui
         double hrrnAvgNTAT = 0; // stores avg NTAT for HRRN
         float rrAvgNTAT = 0; // stores avg NTAT for RR
         int tempTime;
+        bool hrrnInitiated = false; // determines whether hrrn clonable function is run or not
 
         /**
         * default constructor for Form1
@@ -185,14 +187,21 @@ namespace _490Gui
             Process process;
             var counter = processList.Count;
             List<Process> processListArray = processList.ToList();
-            var HRRNProcessList = new List<Process>();
+            
             bool executedServiceTime;
-            foreach (var elt in processListArray)
+            if (hrrnInitiated == false)
             {
-                HRRNProcessList.Add((Process)elt.Clone());
-                //hrrnProcessList.Add((Process)elt.Clone());
+                foreach (var elt in processListArray)
+                {
+                    HRRNProcessList.Add((Process)elt.Clone());
+                    //hrrnProcessList.Add((Process)elt.Clone());
+                    HRRNwaitlist.Add((Process)elt.Clone());
+                    hrrnInitiated = true;
+                }
+                
             }
-            hrrnProcessList = HRRNProcessList;
+            
+            //hrrnProcessList = HRRNProcessList;
             //var HRRNProcessList = DeepCopy(processListArray);
             //bool executedServiceTime;
             // set names on GUI events
@@ -280,8 +289,10 @@ namespace _490Gui
                         {
                             HRRNProcessList.Remove(removeList[i]);
                         }
+                        
                     }
-                    hrrnProcessList = HRRNProcessList;
+                    
+                    //hrrnProcessList = HRRNProcessList;
                     removeList.Clear(); //clear remove list so we can do it again
 
                     // If there are more than 1 items in availableProcessList, calculate the response ratio and sort them accordingly
@@ -302,7 +313,8 @@ namespace _490Gui
                         {
                             Invoke(new Action(() => { setCPU1TRShow(availableProcessesList[i].ServiceTime); cpu1ProcessExec.Text = availableProcessesList[i].ProcessID; }));
                         }
-                        
+                        //hrrnProcessList.RemoveAt(0);
+                        HRRNwaitlist.RemoveAt(0); // removes item at the top of the waitlist for waitlistProcessQueue purposes
                         ThreadSim.executeHRRN(availableProcessesList[i], Decimal.ToInt32(this.timeUnitUpDown.Value));
                         availableProcessesList[i].IntFinishTime = secondsElapsed;
                         hrrnFinishedProcess.Add(availableProcessesList[i]);
@@ -311,7 +323,7 @@ namespace _490Gui
                 }
             }
         }
-
+        // calculates response ratios for hrrn
         public void calculateResponseRatio(List<Process> processList)
         {
             for (int i = 0; i < processList.Count; i++)
@@ -416,15 +428,15 @@ namespace _490Gui
 
 
             // for each line in csv
-            if (hrrnProcessList.Count > 0)
+            if (HRRNwaitlist.Count > 0)
             {
-                for (int i = 0; i < hrrnProcessList.Count; i++)
+                for (int i = 0; i < HRRNwaitlist.Count; i++)
                 {
-                    if (hrrnProcessList.ElementAt<Process>(i).ArriveTime <= secondsElapsed)
+                    if (HRRNwaitlist.ElementAt<Process>(i).ArriveTime <= secondsElapsed)
                     {
                         DataRow row = table4.NewRow();
                         
-                        table4.Rows.Add(hrrnProcessList.ElementAt<Process>(i).ProcessID, hrrnProcessList.ElementAt<Process>(i).ServiceTime);
+                        table4.Rows.Add(HRRNwaitlist.ElementAt<Process>(i).ProcessID, HRRNwaitlist.ElementAt<Process>(i).ServiceTime);
                         
                         
                     }
@@ -481,12 +493,12 @@ namespace _490Gui
             }
 
         }
-
+        // change time remaining text for HRRN
         private void setCPU1TRShow(int time)
         {
             cpu1TRShow.Text = time.ToString();
         }
-
+        // change time remaining text for RR
         private void setCPU2TRShow(int time)
         {
             cpu2TRShow.Text = time.ToString();
