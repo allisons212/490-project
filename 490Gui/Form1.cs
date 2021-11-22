@@ -17,21 +17,20 @@ namespace _490Gui
     {
         //String[] processesChosen;
         static Queue<Process> processList = new Queue<Process>(); // list of processes pulled from csv for threads
-        static Queue<Process> hrrnProcessList = new Queue<Process>(); // list of processes for hrrn
+        static List<Process> hrrnProcessList = new List<Process>(); // list of processes for hrrn
         static List<Process> rrFinishedProcess = new List<Process>(); // completed processes on rr side
         static List<Process> hrrnFinishedProcess = new List<Process>(); // completed processes on hrrn side
-        List<Process> availableProcessesList = new List<Process>(); // processes available for HRRN
-        List<Process> HRRNProcessList = new List<Process>();
+
         Thread thread1; // first thread
         Thread thread2; // second thread
         int secondsElapsed; // time passed in program
         bool started = false; // bool tracking if process has started already
         bool running = false; // bool to track if threads are running
         string file; // string to store csv
-        float hrrnAvgNTAT = 0; // stores avg NTAT for HRRN
+        double hrrnAvgNTAT = 0; // stores avg NTAT for HRRN
         float rrAvgNTAT = 0; // stores avg NTAT for RR
         int tempTime;
-        
+
         /**
         * default constructor for Form1
         **/
@@ -48,14 +47,14 @@ namespace _490Gui
 
             // load processList with data from 
             processList = Parser.readProcessFile(file);
-            hrrnProcessList = Parser.readProcessFile(file);
+            //hrrnProcessList = Parser.readProcessFile(file);
 
             // datagrid generation assumes a non-blank csv file is used
 
             // populate datagrid with initial data
 
             // read in data 
-            
+
         }
 
         // events for GUI
@@ -67,12 +66,12 @@ namespace _490Gui
         public event StartSys_ClickEventHandler StartSysClicked;
         private void StartSys_Click(object sender, EventArgs e)
         {
-            
+
             if (started == false)
             {
                 // set the time (in ms) that the threads will run at for the whole program
                 timeElapsed.Interval = Decimal.ToInt32(this.timeUnitUpDown.Value);
-                
+
                 DataTable table2 = new DataTable(); // table used to populate data grid
                 String[] headers2 = { "Process Name", "Service Time" };
                 String[] l2 = System.IO.File.ReadAllLines(file);
@@ -94,33 +93,10 @@ namespace _490Gui
                     }
 
                 }
-                
-                // initialize RR wait process queue grid with these values
+
+                // initialize RR and HRRN wait process queue grid with these values
                 rrWaitProcessQueue.DataSource = table2;
-
-                DataTable table3 = new DataTable(); // table used to populate data grid
-                String[] headers3 = { "Process Name", "Service Time" };
-                String[] l3 = System.IO.File.ReadAllLines(file);
-
-                // set up headers
-
-                foreach (String header in headers3)
-                {
-                    table3.Columns.Add(header, typeof(String));
-                }
-
-                // for each line in csv
-                for (int i = 0; i < l3.Length; i++)
-                {
-                    if (hrrnProcessList.ElementAt<Process>(i).ArriveTime == 0)
-                    {
-                        DataRow row = table3.NewRow();
-                        table3.Rows.Add(hrrnProcessList.ElementAt<Process>(i).ProcessID, hrrnProcessList.ElementAt<Process>(i).ServiceTime);
-                    }
-
-                }
-
-                HRRNWaitProcessQueue.DataSource = table3;
+                HRRNWaitProcessQueue.DataSource = table2;
 
                 // initialize starting threads
                 this.sysStatLabel.Text = "System Running"; // changes text on system status
@@ -128,14 +104,14 @@ namespace _490Gui
                 thread1 = new Thread(new ThreadStart(SelectProcess));
                 //cpu2TRShow.Text = tempTime.ToString();
                 thread2 = new Thread(new ThreadStart(SelectProcess));
-                
-                
+
+
                 // begin running threads
 
                 thread1.Start(); // start thread 1 (Round Robin) execution
                 //setCPU2TRShow(Decimal.ToInt32(rrTSLength.Value));
                 thread2.Start(); // start thread 2 (HRRN) execution
-                
+
                 timeElapsed.Start(); // start the GUI-side timer
 
                 this.cpu1ProcessExec.Text = thread2.Name; // set the text denoting what process is running based on this process
@@ -178,7 +154,7 @@ namespace _490Gui
         public event PauseSysButton_ClickEventHandler PauseSysClicked;
         private void PauseSysButton_Click(object sender, EventArgs e)
         {
-            
+
             if (running == true && (thread1.IsAlive || thread2.IsAlive))
             {
                 if (thread1.IsAlive) { thread1.Suspend(); } // only run this line if thread1 hasn't finished
@@ -209,17 +185,20 @@ namespace _490Gui
             Process process;
             var counter = processList.Count;
             List<Process> processListArray = processList.ToList();
-            
+            var HRRNProcessList = new List<Process>();
             bool executedServiceTime;
             foreach (var elt in processListArray)
             {
                 HRRNProcessList.Add((Process)elt.Clone());
+                //hrrnProcessList.Add((Process)elt.Clone());
             }
+            hrrnProcessList = HRRNProcessList;
             //var HRRNProcessList = DeepCopy(processListArray);
+            //bool executedServiceTime;
             // set names on GUI events
             if (Thread.CurrentThread.ManagedThreadId == 3)
             {
-                
+
                 while (counter != 0)
                 {
                     if (processList.Peek().EntryTime != null)
@@ -258,7 +237,7 @@ namespace _490Gui
                         process.ServiceTime = 0;
                         Console.WriteLine("***********      " + process.ProcessID + " has exited. Program List Count: " + processList.Count + "      ************");
                         process.IntFinishTime = secondsElapsed;
-                        
+
                         rrFinishedProcess.Add(process);
                         // Console.WriteLine("***********      " + processList.Peek().ProcessID + "      ************");
                     }
@@ -292,6 +271,7 @@ namespace _490Gui
                             removeList.Add(HRRNProcessList[i]);
                         }
                     }
+                    
 
                     // Remove items from HRRNProcessList that will be executed
                     for (int i = 0; i < removeList.Count; i++)
@@ -301,6 +281,7 @@ namespace _490Gui
                             HRRNProcessList.Remove(removeList[i]);
                         }
                     }
+                    hrrnProcessList = HRRNProcessList;
                     removeList.Clear(); //clear remove list so we can do it again
 
                     // If there are more than 1 items in availableProcessList, calculate the response ratio and sort them accordingly
@@ -312,6 +293,7 @@ namespace _490Gui
                     // Execute all items in availableProcessList
                     for (int i = 0; i < availableProcessesList.Count; i++)
                     {
+                        
                         try // this will throw a cross threading error - call invoke to get around this
                         {
                             setCPU1TRShow(availableProcessesList[i].ServiceTime);
@@ -320,11 +302,10 @@ namespace _490Gui
                         {
                             Invoke(new Action(() => { setCPU1TRShow(availableProcessesList[i].ServiceTime); cpu1ProcessExec.Text = availableProcessesList[i].ProcessID; }));
                         }
+                        
                         ThreadSim.executeHRRN(availableProcessesList[i], Decimal.ToInt32(this.timeUnitUpDown.Value));
-                        if (availableProcessesList[i].ServiceTime <= 0)
-                        {
-                            hrrnFinishedProcess.Add(availableProcessesList[i]);
-                        }
+                        availableProcessesList[i].IntFinishTime = secondsElapsed;
+                        hrrnFinishedProcess.Add(availableProcessesList[i]);
                     }
                     availableProcessesList.Clear();
                 }
@@ -339,6 +320,7 @@ namespace _490Gui
                 processList[i].ResponseRatio = (waitingTime + processList[i].ServiceTime) / processList[i].ServiceTime;
             }
             processList.Sort();
+            
         }
 
         // on every tick (1 second by default) this runs
@@ -379,7 +361,7 @@ namespace _490Gui
             {
                 table = new DataTable(); // table used to populate data grid
                 String[] headers2 = { "Process Name", "Arrival Time", "Service Time", "Finish Time (Ticks)", "TAT", "nTAT" };
-            
+
                 // set up headers for data table
 
                 foreach (String header in headers2)
@@ -392,7 +374,7 @@ namespace _490Gui
                 foreach (Process p in rrFinishedProcess)
                 {
                     DataRow row = table.NewRow();
-                    float n = p.IntFinishTime / p.InitialServiceTime; // calculate a float for this process's nTAT
+                    double n = ((double)p.IntFinishTime*10 / (double)p.InitialServiceTime*10)/100; // calculate a double for this process's nTAT
                     table.Rows.Add(p.ProcessID, p.ArriveTime, p.InitialServiceTime, p.IntFinishTime, p.TAT, n.ToString());
                     rrAvgNTAT += p.IntFinishTime / p.InitialServiceTime;
                 }
@@ -417,23 +399,43 @@ namespace _490Gui
                 table4.Columns.Add(header, typeof(String));
             }
 
+            // check to see if the currently executing thread is in hrrnProcessList
+ //           if (thread2.Name != null)
+ //           {
+ //               foreach (Process p in hrrnProcessList)
+ //               {
+ //
+  //                  if (thread2.Name.Equals(p.ProcessID))
+ //                   {
+ //                       hrrnProcessList.Remove(p);
+ //                       break;
+ //                   }
+ //               }
+ //           }
+            
+
+
             // for each line in csv
             if (hrrnProcessList.Count > 0)
             {
-                for (int i = 0; i < hrrnProcessList.Count-1; i++)
+                for (int i = 0; i < hrrnProcessList.Count; i++)
                 {
                     if (hrrnProcessList.ElementAt<Process>(i).ArriveTime <= secondsElapsed)
                     {
                         DataRow row = table4.NewRow();
+                        
                         table4.Rows.Add(hrrnProcessList.ElementAt<Process>(i).ProcessID, hrrnProcessList.ElementAt<Process>(i).ServiceTime);
+                        
+                        
                     }
                 }
             }
-            
+
 
             // initialize log table with these values
 
             HRRNWaitProcessQueue.DataSource = table4;
+            
 
             // reinitialize hrrn finished table
             // populate the beginnings of the log data table if processes have already finished
@@ -454,10 +456,10 @@ namespace _490Gui
                 foreach (Process p in hrrnFinishedProcess)
                 {
                     DataRow row = table.NewRow();
-                    table.Rows.Add(p.ProcessID, p.ArriveTime, p.InitialServiceTime, p.IntFinishTime, p.TAT, p.IntFinishTime / p.InitialServiceTime);
-                    hrrnAvgNTAT += p.IntFinishTime / p.InitialServiceTime;
+                    table.Rows.Add(p.ProcessID, p.ArriveTime, p.InitialServiceTime, p.IntFinishTime, p.TAT, (double)p.IntFinishTime / (double)p.InitialServiceTime);
+                    hrrnAvgNTAT += (double)p.IntFinishTime / (double)p.InitialServiceTime; ;
                 }
-                hrrnAvgNTAT = hrrnAvgNTAT / hrrnFinishedProcess.Count();
+                hrrnAvgNTAT = (double)hrrnAvgNTAT / (double)hrrnFinishedProcess.Count();
                 // initialize log table with these values
                 datalogHRRN.DataSource = table;
                 nTATLabelHRRN.Text = hrrnAvgNTAT.ToString();
@@ -477,14 +479,14 @@ namespace _490Gui
             {
                 cpu2TRShow.Text = (Int32.Parse(cpu2TRShow.Text) - 1).ToString();
             }
-            
+
         }
 
         private void setCPU1TRShow(int time)
         {
             cpu1TRShow.Text = time.ToString();
         }
-        
+
         private void setCPU2TRShow(int time)
         {
             cpu2TRShow.Text = time.ToString();

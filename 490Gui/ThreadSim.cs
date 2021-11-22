@@ -128,6 +128,7 @@ namespace _490Gui
 			counter++;
 
 			long trial = computeCurrentThroughput(process.EntryTime);
+
 		}
 
 		// Summary: Calculates the number of processes completed since program start
