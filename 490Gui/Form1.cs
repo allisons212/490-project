@@ -13,6 +13,9 @@ using System.Threading;
 
 namespace _490Gui
 {
+    /**
+    Summary: Form1 class used mainly for the gui and selecting a process to run
+    */
     public partial class Form1 : Form
     {
         //String[] processesChosen;
@@ -158,11 +161,10 @@ namespace _490Gui
                 // this assumes thread1 is meant to start at time 0 and there is at least one thread
                 thread1 = new Thread(new ThreadStart(SelectProcess));
 
-                // 
+                // checks to see if there is a thread already created then creates a second thread
                 if (processList.Count > 1)
                 {
                     thread2 = new Thread(new ThreadStart(SelectProcess));
-
                 }
 
 
@@ -256,79 +258,76 @@ namespace _490Gui
 
         // Summary: Thread will select a new process from the queue
         // and then send the process to be executed.
-        // Params: time
+        // Params: None
         // Return: None
         public void SelectProcess()
         {
-            Process process;
-            var counter = processList.Count;
-            List<Process> processListArray = processList.ToList();
-            var HRRNProcessList = new List<Process>();
-            foreach(var elt in processListArray)
+            Process process; // creates a process 
+            var counter = processList.Count; // counter keeps up with the number of processes to run 
+            List<Process> processListArray = processList.ToList(); // makes a list of the queue 
+            var HRRNProcessList = new List<Process>(); // creates a hrrn list to be sorted
+            foreach(var elt in processListArray) // loops through each element of the queue
             {
-                HRRNProcessList.Add((Process)elt.Clone());
+                HRRNProcessList.Add((Process)elt.Clone()); // deep copies it as a list item 
             }
-            //var HRRNProcessList = DeepCopy(processListArray);
-            bool executedServiceTime;
+            bool executedServiceTime; // true or false on whether service time was executed 
             // set names on GUI events
             if (Thread.CurrentThread.ManagedThreadId == 3)
             {
-                while (counter != 0)
+                while (counter != 0) // while process number is not 0 
                 {
-                    if (processList.Peek().EntryTime != null)
-                        processList.Peek().EntryTime = DateTime.Now;
+                    if (processList.Peek().EntryTime != null) 
+                        processList.Peek().EntryTime = DateTime.Now; 
                     long executionTime = (processList.Peek().EntryTime.Ticks - Program.programStartTime.Ticks) / 10000000;
                     int arrivalTime = processList.Peek().ArriveTime;
-                    //int counter;
-                    // var process = processList.Dequeue();
-                    if (arrivalTime <= executionTime)
+                    // uses execution time to compare the expected arrival time before process enters system
+                    if (arrivalTime <= executionTime) 
                     {
                         process = processList.Dequeue();
                         counter--;
-                        executedServiceTime = ThreadSim.executeRoundRobin(process, Decimal.ToInt32(this.numericUpDown1.Value), 5); //This would be changed to call HRRN and RR respectively TODO CHANGE THE 5 VALUE TO INPUT QUANTUM TIME
+                        executedServiceTime = ThreadSim.executeRoundRobin(process, Decimal.ToInt32(this.numericUpDown1.Value), 5); //TODO CHANGE THIS VALUE TO INPUT QUANTUM TIME
                     }
                     else
                     {
                         Thread.Sleep(1000);
                         continue;
                     }
-                    if (executedServiceTime || process.ServiceTime <= 0)
+                    if (executedServiceTime || process.ServiceTime <= 0) // if executed service time is complete or service time is less than or equal to 0 
                     {
-                        process.ServiceTime = 0;
-                        Console.WriteLine("***********      " + process.ProcessID + " has exited. Program List Count: " + processList.Count + "      ************");
-                        // Console.WriteLine("***********      " + processList.Peek().ProcessID + "      ************");
+                        process.ServiceTime = 0; // make sure it is set to 0 
+                        // Console.WriteLine("***********      " + process.ProcessID + " has exited. Program List Count: " + processList.Count + "      ************");
                     }
                     else
                     {
-                        processList.Enqueue(process);
+                        processList.Enqueue(process); // 
                         process.ServiceTime = process.ServiceTime - 5; //TODO CHANGE THIS VALUE TO INPUT QUANTUM TIME
                         counter++;
                     }
                 }
             }
-
-            if (Thread.CurrentThread.ManagedThreadId == 4)
+            
+            if (Thread.CurrentThread.ManagedThreadId == 4) // the thread that will run hrrn
             {
-                // List<Process> processListArray = processList.ToList();
-                List <Process> availableProcessesList = new List<Process>();
-                List<Process> removeList = new List<Process>(); 
+                List <Process> availableProcessesList = new List<Process>(); // list to be sorted
+                List<Process> removeList = new List<Process>(); // removes the processes that have ran 
                 while (HRRNProcessList.Count != 0)
                     {
                     
-                    // Grab all items that are ready to be executed and add them to availableProcessList
+                    // gets all processes that are ready to be executed and add them to availableProcessList
+                    // uses execution time to compare the expected arrival time before process enters system
                     for (int i = 0; i < HRRNProcessList.Count; i++)
                     {
-                        var executionTime2 = (DateTime.Now.Ticks - Program.programStartTime.Ticks) / 10000000;
+                        var executionTime2 = (DateTime.Now.Ticks - Program.programStartTime.Ticks) / 10000000; 
                         var arrivalTime2 = HRRNProcessList[i].ArriveTime;
                         if (HRRNProcessList[i].ArriveTime <= executionTime2)
                         {
-                            HRRNProcessList[i].AvailableProcessesTime = DateTime.Now;
-                            availableProcessesList.Add(HRRNProcessList[i]);
-                            removeList.Add(HRRNProcessList[i]);
+                            HRRNProcessList[i].AvailableProcessesTime = DateTime.Now; // sets the available process time as now
+                            availableProcessesList.Add(HRRNProcessList[i]); // adds to list to be sorted
+                            removeList.Add(HRRNProcessList[i]); // adds to list to be deleted eventually
                         }
                     }
 
-                    // Remove items from HRRNProcessList that will be executed
+                    // remove items from HRRNProcessList that will be executed
                     for (int i = 0; i<removeList.Count; i++)
                     {
                         if(HRRNProcessList.Contains(removeList[i]))
@@ -336,15 +335,15 @@ namespace _490Gui
                             HRRNProcessList.Remove(removeList[i]);
                         }
                     }
-                    removeList.Clear(); //clear remove list so we can do it again
+                    removeList.Clear(); // clear remove list so we can do it again
 
-                    // If there are more than 1 items in availableProcessList, calculate the response ratio and sort them accordingly
+                    // if there are more than 1 items in availableProcessList, calculate the response ratio and sort them accordingly
                     if (availableProcessesList.Count > 1)
                     {
                         calculateResponseRatio(availableProcessesList);
                     }
 
-                    // Execute all items in availableProcessList
+                    // execute all items in availableProcessList
                     for (int i = 0; i < availableProcessesList.Count; i++)
                     {
                         ThreadSim.executeHRRN(availableProcessesList[i], Decimal.ToInt32(this.numericUpDown1.Value));
@@ -354,6 +353,11 @@ namespace _490Gui
             }
         }
 
+        // Summary: Calculates the time a process has been waiting and adds it to its service time 
+        // divides it all by service to to generate response ratio that gives priority to processes who
+        // have the highest response ratio to execution 
+        // Params: List
+        // Return: None 
         public void calculateResponseRatio(List<Process> processList)
         {
             for (int i=0; i<processList.Count; i++)
@@ -361,9 +365,10 @@ namespace _490Gui
                 var waitingTime = Convert.ToDouble(DateTime.Now.Ticks - processList[i].AvailableProcessesTime.Ticks) / 10000000;
                 processList[i].ResponseRatio = (waitingTime + processList[i].ServiceTime) / processList[i].ServiceTime;
             }
-            processList.Sort();
+            processList.Sort(); // calls list sort method that works with compare to to sort based off of response ratio
         }
-
+        
+        // helps create a binding on the gui side
         private void parserBindingSource_CurrentChanged(object sender, EventArgs e)
         {
 

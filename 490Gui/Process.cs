@@ -1,5 +1,9 @@
 ﻿using System;
 
+/**
+ Summary: Process class holds the fields of a process, the getters and setters, and methods that
+	clone, compare and compute for a process.
+ */
 public class Process : ICloneable, IComparable
 {
     // time process arrives in queue
@@ -9,6 +13,7 @@ public class Process : ICloneable, IComparable
 		get { return arrivalTime; }
 		set { arrivalTime = value; }
 	}
+
     // time process takes
 	private int serviceTime;
 	public int ServiceTime
@@ -16,6 +21,7 @@ public class Process : ICloneable, IComparable
 		get { return serviceTime; }
 		set { serviceTime = value; }
 	}
+
     // ID of process
 	private string processID;
 	public string ProcessID
@@ -23,6 +29,7 @@ public class Process : ICloneable, IComparable
 		get { return processID; }
 		set { processID = value; }
 	}
+
     // priority of process in list of processes
 	private int priority;
 	public int Priority
@@ -30,6 +37,7 @@ public class Process : ICloneable, IComparable
 		get { return priority; }
 		set { priority = value; }
 	}
+
     // time process entered queue
 	private DateTime entryTime;
 	public DateTime EntryTime
@@ -37,6 +45,7 @@ public class Process : ICloneable, IComparable
 		get { return entryTime; }
 		set { entryTime = value; }
 	}
+
     // finish time of process
 	private DateTime finishTime;
 	public DateTime FinishTime
@@ -52,6 +61,7 @@ public class Process : ICloneable, IComparable
 		get { return ntat; }
 		set { ntat = computeNTAT(tat, serviceTime); }
 	}
+
     // the elapsed time from when a process arrived to when the process finishes
     private TimeSpan tat;
 	public TimeSpan TAT
@@ -59,6 +69,7 @@ public class Process : ICloneable, IComparable
 		get { return tat; }
 		set { tat = computeTAT(entryTime, FinishTime); }
 	}
+
     // thread of process
 	private int processThread;
 	public int ProcessThread
@@ -75,7 +86,8 @@ public class Process : ICloneable, IComparable
 		set { availableProcessesTime = value; }
 	}
 
-	// waiting time 
+	// ratio generated for hrrn; allows highest rr to run taking into account 
+	// long time waiting times versus short run times
 	private double responseRatio;
 	public double ResponseRatio
 	{
@@ -100,7 +112,7 @@ public class Process : ICloneable, IComparable
 	public static TimeSpan computeTAT(DateTime time1, DateTime time2)
 	{
 		TimeSpan tat = time2 - time1;
-		Console.WriteLine(tat);
+		// Console.WriteLine(tat);
 		return tat;
 	}
 
@@ -111,10 +123,15 @@ public class Process : ICloneable, IComparable
 	public static TimeSpan computeNTAT(TimeSpan timespan, int serviceTime)
 	{
 		TimeSpan nTAT = new TimeSpan(timespan.Ticks / serviceTime);
-		Console.WriteLine(nTAT);
+		// Console.WriteLine(nTAT);
 		return nTAT;
 	}
 
+	// Summary: Compares a process's response ratio for sorting and returns 
+	// < 0 for instance preceds in sort order, 0 if equal,
+	// > 0 instance follows obj in sort order
+	// Params: obj 
+	// Return: int
 	public int CompareTo(object process)
     {
 		if (process == null)
@@ -123,6 +140,9 @@ public class Process : ICloneable, IComparable
 		return this.ResponseRatio.CompareTo(temp.ResponseRatio);
     }
 
+	// Summary: Creates a deep clone for the hrrn alg of a process
+	// Params: none
+	// Return: process
 	public object Clone()
     {
 		return new Process
